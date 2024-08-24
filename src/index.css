@@ -10,13 +10,20 @@
   --fourth-Color:#2A234D;
   --fifth-Color:#F6EDFC;
 
+
+  --Gold-color:#D99F7E;
+  --Active-Gold-color:#e09600;
+  --bg-color:#F7F7F7
+
   font-family: Georgia, 'Times New Roman', Times, serif;
   line-height: 1.5;
   font-weight: 400;
 
   /* color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424; */
+  */
+  background-color: #F7F7F7; 
+
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

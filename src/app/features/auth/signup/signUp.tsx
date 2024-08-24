@@ -1,162 +1,165 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { CustomeInput, ErrorToasts } from '../../../shared/components';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 function SignUp() {
+  let userSchema = Yup.object({
+    firstName: Yup.string().trim().required('First name is required'),
+    lastName: Yup.string().required('Last name is required'),
+    email: Yup.string()
+      .email('Invalid email format')
+      .required('Email is required'),
+    password: Yup.string()
+      .required('Password is required')
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
+      ),
+    phoneNumber: Yup.string().required('Phone number is required'),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password'), undefined], 'Passwords must match')
+      .required('Confirm Password is required'),
+  });
+
+  const OnSubmitHandler = (values: any) => {
+    alert(JSON.stringify(values, null, 2));
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      phoneNumber: '',
+    },
+    onSubmit: OnSubmitHandler,
+    validationSchema: userSchema,
+  });
+
   return (
-    <div className="flex bg-white flex-1">
-      <div
-        className="flex h-screen justify-center 
-    items-center align-middle w-full lg:w-1/2  flex-col px-20"
-      >
-        <div className="lg:hidden flex mb-20 ">
+    <div className="flex flex-1 bg-white">
+      <ErrorToasts error={'error message'} isError={true} />
+
+      <div className="flex h-lvh w-full flex-col items-center justify-center px-20 align-middle lg:w-1/2">
+        <div className="mb-10 flex lg:hidden">
           <img
             src={
-              "https://images.unsplash.com/photo-1513094735237-8f2714d57c13?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzJ8fHNob3BwaW5nfGVufDB8fDB8fHww"
+              'https://images.unsplash.com/photo-1513094735237-8f2714d57c13?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzJ8fHNob3BwaW5nfGVufDB8fDB8fHww'
             }
-            className="h-[300px] w-[300px] rounded-full border-5 border-white shadow-2xl"
+            className="border-5 mx-auto h-56 w-56 rounded-full border-white shadow-2xl"
           />
         </div>
 
-        <h1 className="font-bold text-[30px] self-start text-black">
-          Welcome Back!
-        </h1>
-        <h1 className=" text-[12px] self-start text-[var(--fourth-Color)] ">
-          Let's Continue Shopping{" "}
-        </h1>
-
-         <form className="w-full flex flex-col mt-10 mb-3">
-          <div className="grid md:grid-cols-2 md:gap-6">
-            <div className="relative z-0 w-full mb-5 group">
-              <input
-                type="text"
-                name="floating_first_name"
-                id="floating_first_name"
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-                required
-              />
-              <label
-                htmlFor="floating_first_name"
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                First name
-              </label>
-            </div>
-            <div className="relative z-0 w-full mb-5 group">
-              <input
-                type="text"
-                name="floating_last_name"
-                id="floating_last_name"
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-                required
-              />
-              <label
-                htmlFor="floating_last_name"
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                Last name
-              </label>
-            </div>
-          </div>
-
-          <div className="relative z-0 w-full mb-5 group">
-            <input
-              type="email"
-              name="floating_email"
-              id="floating_email"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=" "
-              required
-            />
-            <label
-              htmlFor="floating_email"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              Email address
-            </label>
-          </div>
-          <div className="relative z-0 w-full mb-5 group">
-            <input
-              type="password"
-              name="floating_password"
-              id="floating_password"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=" "
-              required
-            />
-            <label
-              htmlFor="floating_password"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              Password
-            </label>
-          </div>
-
-          <div className="relative z-0 w-full mb-5 group">
-            <input
-              type="password"
-              name="repeat_password"
-              id="floating_repeat_password"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=" "
-              required
-            />
-            <label
-              htmlFor="floating_repeat_password"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              Confirm password
-            </label>
-          </div>
-
-          <div className="relative z-0 w-full mb-5 group">
-            <input
-              type="tel"
-              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-              name="floating_phone"
-              id="floating_phone"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=" "
-              required
-            />
-            <label
-              htmlFor="floating_phone"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              Phone number (123-456-7890)
-            </label>
-          </div>
-
-          <button
-            type="submit"
-            className="text-white bg-black hover:bg-black[0.5] font-medium 
-            rounded-lg text-sm w-full self-center  px-5 py-2.5 text-center mt-4"
+        <div className="flex w-full flex-col justify-center self-center">
+          <h1 className="self-start text-[30px] font-bold text-black">
+            SignUp
+          </h1>
+          <h1 className="self-start text-[12px] text-[var(--fourth-Color)]">
+            Let's Create Your Account For Free
+          </h1>
+        
+          <form
+            onSubmit={formik.handleSubmit}
+            className="mb-3 mt-10 flex w-full flex-col"
           >
-            Submit
-          </button>
-        </form>
+            <div className="grid md:grid-cols-2 md:gap-6">
+              <CustomeInput
+                labelText="First name"
+                onChange={formik.handleChange}
+                value={formik.values.firstName}
+                type="text"
+                name="firstName"
+                onBlur={formik.handleBlur}
+                isError={formik.touched.firstName && formik.errors.firstName}
+                error={formik.errors.firstName}
+              />
+              <CustomeInput
+                labelText="Last name"
+                onChange={formik.handleChange}
+                value={formik.values.lastName}
+                type="text"
+                name="lastName"
+                onBlur={formik.handleBlur}
+                isError={formik.touched.lastName && formik.errors.lastName}
+                error={formik.errors.lastName}
+              />
+            </div>
 
-        <h2 className="">
-          Already Have Acoount{" "}
-          <Link to={"SignUp"}>
-            <span className="font-extrabold text-[var(--fourth-Color)] cursor-pointer">
-              Login!
-            </span>
-          </Link>
-        </h2>
+            <CustomeInput
+              labelText="Email Address"
+              onChange={formik.handleChange}
+              value={formik.values.email}
+              type="email"
+              name="email"
+              onBlur={formik.handleBlur}
+              isError={formik.touched.email && formik.errors.email}
+              error={formik.errors.email}
+            />
+
+            <CustomeInput
+              labelText="password"
+              onChange={formik.handleChange}
+              value={formik.values.password}
+              type="password"
+              name="password"
+              onBlur={formik.handleBlur}
+              isError={formik.touched.password && formik.errors.password}
+              error={formik.errors.password}
+            />
+            <CustomeInput
+              labelText="Confirm Password"
+              onChange={formik.handleChange}
+              value={formik.values.confirmPassword}
+              type="password"
+              name="confirmPassword"
+              onBlur={formik.handleBlur}
+              isError={
+                formik.touched.confirmPassword && formik.errors.confirmPassword
+              }
+              error={formik.errors.confirmPassword}
+            />
+
+            <CustomeInput
+              labelText="Phone number (123-456-7890)"
+              onChange={formik.handleChange}
+              value={formik.values.phoneNumber}
+              type="password"
+              name="phoneNumber"
+              onBlur={formik.handleBlur}
+              isError={formik.touched.phoneNumber && formik.errors.phoneNumber}
+              error={formik.errors.phoneNumber}
+            />
+
+            <button
+              type="submit"
+              className="mt-4 w-full cursor-pointer rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-black/50"
+              style={{ backgroundColor: 'black' }}
+            >
+              Submit
+            </button>
+          </form>
+
+          <h2 className="text-center">
+            Already Have Acoount{'  '}
+            <Link to={'/'}>
+              <span className="cursor-pointer font-extrabold text-[var(--fourth-Color)]">
+                Login!
+              </span>
+            </Link>
+          </h2>
+        </div>
       </div>
 
-      <div
-        className="hidden lg:flex h-screen justify-center 
-      items-center align-middle w-1/2
-       bg-[var(--second-Color)]"
-      >
+      <div className="hidden h-screen w-1/2 items-center justify-center bg-[var(--second-Color)] align-middle lg:flex">
         <img
           src={
-            "https://images.unsplash.com/photo-1513094735237-8f2714d57c13?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzJ8fHNob3BwaW5nfGVufDB8fDB8fHww"
+            'https://images.unsplash.com/photo-1513094735237-8f2714d57c13?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzJ8fHNob3BwaW5nfGVufDB8fDB8fHww'
           }
-          className="h-[300px] w-[300px] rounded-full border-5 border-white shadow-2xl"
+          className="border-5 h-[300px] w-[300px] rounded-full border-white shadow-2xl"
         />
       </div>
     </div>
