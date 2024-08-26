@@ -10,6 +10,7 @@ import { Home } from './app/features/index.ts';
 import Layout from './app/shared/layout/layout.tsx';
 import { store } from './app/shared/redux/store.ts';
 import './index.css';
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 const router = createBrowserRouter([
   // {
@@ -32,10 +33,14 @@ const router = createBrowserRouter([
   },
 ]);
 
+const queryClient = new QueryClient()
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+     <QueryClientProvider client={queryClient}>
     <Provider store={store}>
       <RouterProvider router={router} />
     </Provider>
+    </QueryClientProvider>
   </StrictMode>
 );

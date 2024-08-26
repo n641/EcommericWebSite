@@ -3,6 +3,7 @@ import { FaCaretDown } from 'react-icons/fa';
 import { GoPerson } from 'react-icons/go';
 import { NavLink } from 'react-router-dom';
 import Logo from '../../../../assets/logos/LightLogo.png';
+import { useGetAllCategories } from '../../../features/home/hooks/useGetAllCategory';
 
 const Navigators = [
   {
@@ -18,7 +19,7 @@ const Navigators = [
     path: '/',
   },
   {
-    name: 'AboutUS',
+    name: 'WishList',
     path: '/',
   },
 ];
@@ -177,8 +178,11 @@ const Countries = [
 ];
 
 function NavBar() {
+
+  const { isLoadingCategories, Categories } = useGetAllCategories({});
+
   return (
-    <nav className="fixed left-3 right-3 top-5 rounded-2xl border-gray-200 bg-[var(--bg-color)] shadow-2xl dark:bg-gray-900">
+    <nav className="fixed z-10   left-3 right-3 top-5 rounded-2xl border-gray-200 bg-[var(--bg-color)] shadow-2xl dark:bg-gray-900">
       <div className="mx-auto flex max-w-screen-2xl flex-wrap items-center justify-between px-4 py-1">
         {/* logo */}
         <NavLink to={'/'} className={'flex items-center gap-1'}>
@@ -248,7 +252,7 @@ function NavBar() {
                   <ul className="py-2" aria-labelledby="user-menu-button">
                     {ProfileNaviagtor.map((item) => {
                       return (
-                        <li>
+                        <li key={item.name}>
                           <NavLink
                             to={item.path}
                             className="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-[var(--Gold-color)] dark:hover:bg-gray-600"
@@ -301,7 +305,7 @@ function NavBar() {
 
         {/* links */}
         <div
-          className="hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto"
+          className=" z-10hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto"
           id="navbar-language"
         >
           <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium dark:border-gray-700 dark:bg-gray-800 lg:mt-0 lg:flex-row lg:space-x-8 lg:border-0 lg:bg-[var(--bg-color)] lg:p-0 lg:dark:bg-gray-900 rtl:space-x-reverse">
@@ -325,18 +329,26 @@ function NavBar() {
                   className="py-2 text-sm text-gray-700 dark:text-gray-400"
                   aria-labelledby="dropdownLargeButton"
                 >
-                  {SubNavigatiorsCategories.map((item) => {
-                    return (
-                      <li>
-                        <NavLink
-                          to={item.path}
-                          className="block px-4 py-2 hover:bg-gray-100 hover:text-[var(--Gold-color)] dark:hover:bg-gray-600"
-                        >
-                          {item.name}
-                        </NavLink>
-                      </li>
-                    );
-                  })}
+                  {
+                    isLoadingCategories?
+                    <li  className="block px-4 py-2 hover:bg-gray-100 hover:text-[var(--Gold-color)] dark:hover:bg-gray-600">
+                      <h1>Loadin</h1>
+                    </li>
+                    :
+                    Categories?.data.map((item :any) => {
+                      return (
+                        <li key={item.name}>
+                          <NavLink
+                            to={'/'}
+                            className="block px-4 py-2 hover:bg-gray-100 hover:text-[var(--Gold-color)] dark:hover:bg-gray-600"
+                          >
+                            {item?.name}
+                          </NavLink>
+                        </li>
+                      );
+                    })
+                  }
+                  
                 </ul>
                 <div className="py-1">
                   <NavLink
@@ -352,7 +364,7 @@ function NavBar() {
             {/* main navigaors */}
             {Navigators.map((item) => {
               return (
-                <li>
+                <li key={item.name}>
                   <NavLink
                     to={item.path}
                     className="block rounded px-3 py-2 text-sm text-black lg:bg-transparent lg:p-0 lg:hover:text-[var(--Gold-color)] lg:dark:text-blue-500"

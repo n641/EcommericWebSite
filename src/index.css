@@ -8,11 +8,12 @@
   --second-Color:#E0EDF4;
   --thired-Color:#F0EDD8;
   --fourth-Color:#2A234D;
-  --fifth-Color:#F6EDFC;
+  --fifth-Color:#f8edfc;
 
 
   --Gold-color:#D99F7E;
   --Active-Gold-color:#e09600;
+  --bg-Gold-color:#f6bc9a;
   --bg-color:#F7F7F7
 
   font-family: Georgia, 'Times New Roman', Times, serif;
@@ -30,3 +31,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* .active{
+  color: red !important;
+} */

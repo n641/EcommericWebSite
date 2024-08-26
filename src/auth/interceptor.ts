@@ -1,0 +1,63 @@
+import axios, { AxiosError } from 'axios';
+
+const getAccessToken = () => {
+  try {
+    return '';
+  } catch (error) {
+    // Error retrieving data
+    console.log(error, 'logged in client error');
+  }
+};
+const apiClient = axios.create({
+  baseURL: 'https://ecommerce.routemisr.com',
+  headers: {
+    Accept: 'application/json',
+  },
+});
+
+export const apiService = (props: any) => {
+  const { needsAuth = false, contentType = false } = props;
+
+  if (needsAuth) {
+    apiClient.defaults.headers.common.Authorization = getAccessToken();
+  }
+  if (contentType === true) {
+    apiClient.defaults.headers.common['Content-Type'] = 'multipart/form-data';
+  } else {
+    apiClient.defaults.headers.common['Content-Type'] = 'application/json';
+  }
+  return apiClient;
+};
+
+// Intercept all requests
+apiClient.interceptors.request.use(
+  async (config: any) => {
+    // console.log(JSON.stringify({config}, null, 8));
+    // TODO: modify your header here
+    // config.headers.platform = Platform.OS;
+    // console.log(
+    //   %c ${config.method.toUpperCase()} - ${getUrl(config)}:,
+    //   'color: #0086b3; font-weight: bold',
+    //   config,
+    // );
+    return config;
+  },
+  (error: any) => Promise.reject(error)
+);
+// Intercept all responses
+export function extractAPIErrorResponse(apiClient: any) {
+  axios.interceptors.response.use(
+    undefined,
+    async function (error: AxiosError) {
+      (error as any).originalMessage = error.message;
+
+      Object.defineProperty(error, 'message', {
+        get: function () {
+          return `${error?.response?.data}`;
+        },
+      });
+      return Promise.reject(error);
+    }
+  );
+}
+extractAPIErrorResponse(apiClient);
