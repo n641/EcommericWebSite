@@ -1,28 +1,32 @@
-import image from '../../../../assets/png/cover.jpg';
-import { FaStar } from 'react-icons/fa6';
-import { CiDollar } from 'react-icons/ci';
-import { FaShippingFast } from 'react-icons/fa';
 import { useState } from 'react';
-import { FaHeart } from 'react-icons/fa';
-import { CiHeart } from 'react-icons/ci';
+import { CiDollar, CiHeart } from 'react-icons/ci';
+import { FaHeart, FaShippingFast } from 'react-icons/fa';
+import { FaStar } from 'react-icons/fa6';
 
 function ProductItem({ item }: any) {
   const [saveItem, setsaveItem] = useState(false);
   return (
-    <div className="border-1 group relative rounded-xl border border-gray-200 p-2 shadow-lg transition-all hover:scale-110">
-      <img src={image} alt="" className="h-[180px] w-full rounded-md" />
+    <div className="w-[80%] mx-auto sm:w-[100%] sm:mx-0 border-1 group relative flex flex-col self-center rounded-xl border border-gray-200 p-2 shadow-lg transition-all hover:scale-110">
+      <img
+        src={item?.imageCover}
+        alt=""
+        className="h-[200px] w-full rounded-md bg-white object-contain"
+      />
 
-      <div className='absolute top-5 right-5' onClick={() => setsaveItem(!saveItem)}>
-      {saveItem ? <FaHeart size={20} color='red' /> : <CiHeart size={25} />}
+      <div
+        className="absolute right-5 top-5 cursor-pointer"
+        onClick={() => setsaveItem(!saveItem)}
+      >
+        {saveItem ? <FaHeart size={20} color="red" /> : <CiHeart size={25} />}
       </div>
 
       <div className="mt-2 flex flex-col gap-2">
         <div className="flex w-full justify-between">
-          <h1>name</h1>
+          <h1>{item?.title?.split(' ').splice(0, 2).join(' ')}</h1>
 
           <div className="flex items-center gap-2">
             <FaStar color="#FFC107" width={10} height={10} />
-            <p className="text-[12px] text-gray-500">4.9</p>
+            <p className="text-[12px] text-gray-500">{item?.ratingsAverage}</p>
           </div>
         </div>
 
@@ -30,10 +34,10 @@ function ProductItem({ item }: any) {
           <div className="flex items-center gap-1">
             <CiDollar />
             <p className="mr-1 text-[12px] font-bold text-gray-500 line-through">
-              $30
+              ${item?.price + 20}
             </p>
             <p className="text-[12px] font-bold text-[var(--main-Color)]">
-              $10
+              ${item?.price}
             </p>
           </div>
 

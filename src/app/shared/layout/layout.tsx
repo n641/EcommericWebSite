@@ -6,7 +6,7 @@ function Layout() {
     <div>
       <NavBar />
       
-      <div className="px-10 py-24">
+      <div className="px-1 py-24">
         <Outlet />
       </div>
     </div>

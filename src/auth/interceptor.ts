@@ -46,7 +46,7 @@ apiClient.interceptors.request.use(
 );
 // Intercept all responses
 export function extractAPIErrorResponse(apiClient: any) {
-  axios.interceptors.response.use(
+  apiClient.interceptors.response.use(
     undefined,
     async function (error: AxiosError) {
       (error as any).originalMessage = error.message;

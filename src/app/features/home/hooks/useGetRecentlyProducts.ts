@@ -1,5 +1,4 @@
 import { useQuery } from 'react-query';
-import { GetAllCategries } from '../services/getAllCategries';
 import { GetRecentlyProducts } from '../services/getRecentlyproducts';
 
 export const useGetRecentlyProducts = ({

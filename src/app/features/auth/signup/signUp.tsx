@@ -1,8 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { CustomeInput, ErrorToasts } from '../../../shared/components';
 import { useFormik } from 'formik';
+import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
+import { CustomeInput, ErrorToasts } from '../../../shared/components';
 
 function SignUp() {
   let userSchema = Yup.object({
@@ -61,7 +60,7 @@ function SignUp() {
           <h1 className="self-start text-[12px] text-[var(--fourth-Color)]">
             Let's Create Your Account For Free
           </h1>
-        
+
           <form
             onSubmit={formik.handleSubmit}
             className="mb-3 mt-10 flex w-full flex-col"

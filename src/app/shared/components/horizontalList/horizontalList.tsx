@@ -1,4 +1,4 @@
-import React, { Children, useRef } from 'react';
+import { useRef } from 'react';
 
 function HorizontalList({ children }: any) {
   const scrollContainerRef: any = useRef(null);
@@ -36,7 +36,7 @@ function HorizontalList({ children }: any) {
       onMouseDown={handleMouseDown}
       style={{ scrollbarWidth: 'none' }}
     >
-     {children}
+      {children}
     </div>
   );
 }
