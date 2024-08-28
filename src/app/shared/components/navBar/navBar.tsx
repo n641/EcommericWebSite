@@ -182,7 +182,7 @@ function NavBar() {
   const { isLoadingCategories, Categories } = useGetAllCategories({});
 
   return (
-    <nav className="fixed z-10   left-3 right-3 top-5 rounded-2xl border-gray-200 bg-[var(--bg-color)] shadow-2xl dark:bg-gray-900">
+    <nav className="fixed z-10   left-3 right-3 top-5 rounded-2xl bg-white/90  shadow-2xl dark:bg-gray-900">
       <div className="mx-auto flex max-w-screen-2xl flex-wrap items-center justify-between px-4 py-1">
         {/* logo */}
         <NavLink to={'/'} className={'flex items-center gap-1'}>
