@@ -16,4 +16,7 @@ export * from './breadCramp/breadCramp';
 // ITEMS
 export * from './productItem/productItem';
 
+// skeleton
+export * from './skeletonProduct/skeletonProduct'
+
 export * from './checkBoxs/checkBoxs'
