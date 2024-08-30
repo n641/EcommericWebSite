@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
-import { GetRecentlyProducts } from '../services/getRecentlyproducts';
+import { GetAllProducts } from '../services/getAllproducts';
 
-export const useGetRecentlyProducts = ({
+export const useGetAllProducts = ({
   onErrorHandler,
   onSuccessHandler,
 }: {
@@ -14,7 +14,7 @@ export const useGetRecentlyProducts = ({
     error: errorProducts,
     data: Products,
     isSuccess: isSuccessProducts,
-  } = useQuery('GetLimitProducts', GetRecentlyProducts, {
+  } = useQuery('GetAllProducts', GetAllProducts, {
     onError: (error: any) => {
       if (onErrorHandler) onErrorHandler(error);
     },

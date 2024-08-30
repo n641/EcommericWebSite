@@ -11,7 +11,6 @@ function Home() {
 
   const IsLoading = isLoadingCategories || isLoadingProducts;
 
-  console.log(Products?.data);
   if (IsLoading) {
     return <h1>Loading</h1>;
   }
@@ -20,7 +19,7 @@ function Home() {
       <>
         <MainSlider />
 
-        <div className="mx-6">
+        <div className="mx-2">
           <CategoriesSection Categories={Categories?.data} />
           <RecommendedProductSection Products={Products?.data} />
           <PopularCollectionSection Products={Products?.data ?? []} />

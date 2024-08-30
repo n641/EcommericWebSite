@@ -13,6 +13,7 @@ const CategoryItem = ({ product }: any) => {
             (img: string, index: number) =>
               index < 3 && (
                 <img
+                  key={index}
                   src={img}
                   alt=""
                   className="h-[70px] w-full rounded-xl bg-white object-contain"

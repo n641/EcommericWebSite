@@ -5,6 +5,7 @@ import { FaStar } from 'react-icons/fa6';
 
 function ProductItem({ item }: any) {
   const [saveItem, setsaveItem] = useState(false);
+  
   return (
     <div className="w-[80%] mx-auto sm:w-[100%] sm:mx-0 border-1 group relative flex flex-col self-center rounded-xl border border-gray-200 p-2 shadow-lg transition-all hover:scale-110">
       <img
@@ -30,7 +31,7 @@ function ProductItem({ item }: any) {
           </div>
         </div>
 
-        <div className="flex w-full justify-between">
+        <div className="flex w-full justify-between gap-x-10 sm:gap-x-0">
           <div className="flex items-center gap-1">
             <CiDollar />
             <p className="mr-1 text-[12px] font-bold text-gray-500 line-through">

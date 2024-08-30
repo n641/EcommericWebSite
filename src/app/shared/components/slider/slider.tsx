@@ -9,12 +9,12 @@ const RenderItem1 = ({ backgroundColor, Image, title }: any) => {
   return (
     <div className="px-2 pb-2">
       <div
-        className={`flex h-[400px] w-full flex-col items-center justify-around gap-6 rounded-3xl bg-[${backgroundColor}] p-4 shadow-md md:flex-row 2xl:justify-evenly`}
+        className={`flex h-[400px] w-full flex-col items-center justify-around gap-6 rounded-3xl bg-[${backgroundColor}] p-4 shadow-md md:flex-row 2xl:justify-evenly `}
       >
         <img src={Image} alt="image" className="w-[30%] max-w-[430px]" />
 
-        <div className="flex w-[40%] max-w-[420px] flex-col items-center space-y-3 md:items-start">
-          <h1 className="font-serif text-[1.2rem] font-bold uppercase md:text-[2.5rem]">
+        <div className="flex w-[40%] max-w-[420px] flex-col items-start  space-y-3 lg:items-start">
+          <h1 className="font-serif text-[1.2rem] font-bold uppercase md:text-[2.5rem] ">
             {title}
           </h1>
 
