@@ -32,7 +32,7 @@ function HorizontalList({ children }: any) {
   return (
     <div
       ref={scrollContainerRef}
-      className="flex space-x-4 overflow-x-auto will-change-scroll"
+      className="flex space-x-2 md:space-x-4 overflow-x-auto will-change-scroll "
       onMouseDown={handleMouseDown}
       style={{ scrollbarWidth: 'none' }}
     >

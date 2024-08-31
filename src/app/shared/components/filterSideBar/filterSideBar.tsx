@@ -12,6 +12,10 @@ function FilterSideBar({ openDrawer }: any) {
   const { isLoadingBrands, Brands } = useGetAllBrands({});
   const { isLoadingCategories, Categories } = useGetAllCategories({});
 
+  const IsLoading = isLoadingBrands || isLoadingCategories;
+
+  if(IsLoading) return <h1>Loading</h1> 
+
   const HandleBrands = (e: any, value: any) => {
     if (value?.target?.checked) {
       setSelectedBrands((prev: any) => [...prev, e]);

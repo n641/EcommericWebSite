@@ -1,4 +1,3 @@
-import React from 'react';
 import { SkeletonProduct } from '../../../../shared/components';
 
 function SkeletonHome() {
@@ -87,7 +86,7 @@ function SkeletonHome() {
         </div>
       </div>
 
-      <div className='flex flex-wrap justify-around mt-8 gap-4'>
+      <div className="mt-8 flex flex-wrap justify-around gap-4">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
           <SkeletonProduct key={item} />
         ))}

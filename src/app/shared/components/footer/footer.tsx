@@ -1,14 +1,15 @@
+import { FaDiscord, FaFacebookF, FaGithub, FaTwitter } from 'react-icons/fa';
 import Logo from '../../../../assets/logos/DarkLogo.png';
-import { FaFacebookF } from 'react-icons/fa';
-import { FaTwitter } from 'react-icons/fa';
-import { FaDiscord } from 'react-icons/fa';
-import { FaGithub } from 'react-icons/fa';
-import { useGetAllBrands } from '../../../features/home/hooks/useGetAllBrands';
 import AdvertiesmentSection from '../../../features/home/components/advertiesmentSection/advertiesmentSection';
 import AllBrandsSection from '../../../features/home/components/allBrandsSection/allBrandsSection';
+import { useGetAllBrands } from '../../../features/home/hooks/useGetAllBrands';
 
 function Footer() {
   const { isLoadingBrands, Brands } = useGetAllBrands({});
+
+  if(isLoadingBrands){
+    return <div>Loading...</div>
+  }
 
   return (
     <div className='flex flex-col gap-10 '>

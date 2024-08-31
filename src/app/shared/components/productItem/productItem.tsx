@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { CiDollar, CiHeart } from 'react-icons/ci';
 import { FaHeart, FaShippingFast } from 'react-icons/fa';
 import { FaStar } from 'react-icons/fa6';
+import { useNavigate } from 'react-router-dom';
 
 function ProductItem({ item }: any) {
   const [saveItem, setsaveItem] = useState(false);
-  
+  const navigate = useNavigate();
+
   return (
-    <div className="w-[80%] mx-auto sm:w-[100%] sm:mx-0 border-1 group relative flex flex-col self-center rounded-xl border border-gray-200 p-2 shadow-lg transition-all hover:scale-110">
+    <div className="border-1 group relative mx-auto flex w-[80%] flex-col self-center rounded-xl border border-gray-200 p-2 shadow-lg transition-all hover:scale-110 sm:mx-0 sm:w-[100%]">
       <img
         src={item?.imageCover}
         alt=""
@@ -49,11 +51,25 @@ function ProductItem({ item }: any) {
         </div>
 
         <div className="flex items-center gap-1">
-          <button className="w-full rounded-md bg-black py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-white group-hover:w-[70%] group-hover:animate-bounce group-hover:bg-[var(--main-Color)]">
+          <button
+            className="w-full rounded-md bg-black py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-white group-hover:w-[70%] group-hover:animate-bounce group-hover:bg-[var(--main-Color)]"
+            onClick={() =>
+              navigate('/EcommericWebSite/products/productDetails', {
+                state: { Product: item },
+              })
+            }
+          >
             Buy Now
           </button>
 
-          <button className="w-full truncate whitespace-nowrap rounded-md border border-black p-1.5 text-sm font-semibold text-black transition-all duration-300 group-hover:w-[30%]">
+          <button
+            className="w-full truncate whitespace-nowrap rounded-md border border-black p-1.5 text-sm font-semibold text-black transition-all duration-300 hover:bg-gray-400 group-hover:w-[30%]"
+            onClick={() =>
+              navigate('/EcommericWebSite/products/productDetails', {
+                state: { Product: item },
+              })
+            }
+          >
             View Details
           </button>
         </div>

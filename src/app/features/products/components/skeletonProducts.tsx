@@ -1,9 +1,8 @@
-import React from 'react';
 import { SkeletonProduct } from '../../../shared/components';
 
 function SkeletonProducts() {
   return (
-    <div className="flex flex-wrap gap-5 justify-center mt-10">
+    <div className="mt-10 flex flex-wrap justify-center gap-5">
       {[...Array(8)].map((_, index) => (
         <SkeletonProduct key={index} />
       ))}
