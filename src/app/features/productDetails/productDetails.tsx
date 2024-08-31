@@ -13,7 +13,7 @@ function ProductDetails() {
     categoryId: Product?.category?._id,
   });
 
-  console.log(Products?.data);
+  console.log(Product);
 
   if (isLoadingProducts) {
     return <div>Loading</div>;
@@ -24,7 +24,7 @@ function ProductDetails() {
 
       <ProductSection Product={Product} />
       <DeleverySection />
-      <RatingProduct/>
+      <RatingProduct ProductRate={Product?.ratingsAverage} numberOfRating={Product?.ratingsQuantity}/>
 
       <RelatedProductSection Products={Products?.data} />
     </div>

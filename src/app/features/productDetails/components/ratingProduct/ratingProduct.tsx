@@ -1,12 +1,13 @@
 import React from 'react';
 
-function RatingProduct() {
+function RatingProduct({ ProductRate, numberOfRating }: any) {
   return (
-    <div className="my-5 flex gap-10 flex-col xl:flex-row">
+    <div className="my-5 flex flex-col gap-10 xl:flex-row">
       {/* rating stars */}
       <div className="w-full items-center self-start rounded-xl border border-gray-300 p-4 py-5 xl:w-1/2">
-        <h1 className="mb-3 text-center text-3xl font-bold">4.6</h1>
-        <div className="mb-2 flex items-center">
+        <h1 className="mb-3 text-center text-3xl font-bold">{ProductRate}</h1>
+
+        <div className="mb-2 flex items-center justify-center self-center text-center">
           <svg
             className="me-1 h-4 w-4 text-yellow-300"
             aria-hidden="true"
@@ -62,8 +63,9 @@ function RatingProduct() {
             5
           </p>
         </div>
+
         <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-          1,745 global ratings
+          {numberOfRating} global ratings
         </p>
         <div className="mt-4 flex items-center">
           <a
