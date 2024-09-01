@@ -1,3 +1,6 @@
 export * from './home/home'
 export * from './products/products'
 export * from './productDetails/productDetails'
+export * from './cart/cart'
+export * from './payment/payment/payment'
+export * from './payment/successPayment/successPayment'

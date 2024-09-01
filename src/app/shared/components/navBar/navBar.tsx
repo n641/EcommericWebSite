@@ -295,10 +295,10 @@ function NavBar() {
 
         {/* links */}
         <div
-          className=" z-10 hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto"
+          className=" z-10 hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto bg-white"
           id="navbar-language"
         >
-          <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium dark:border-gray-700 dark:bg-gray-800 lg:mt-0 lg:flex-row lg:space-x-8 lg:border-0 lg:bg-[var(--bg-color)] lg:p-0 lg:dark:bg-gray-900 rtl:space-x-reverse">
+          <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 bg-white p-4 font-medium dark:border-gray-700 dark:bg-gray-800 lg:mt-0 lg:flex-row lg:space-x-8 lg:border-0 lg:bg-white lg:p-0 lg:dark:bg-gray-900 rtl:space-x-reverse">
             
             {/* button drop down */}
             <li>

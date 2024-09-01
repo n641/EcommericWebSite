@@ -5,10 +5,11 @@ import { createRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Home, ProductDetails, Products } from './app/features/index.ts';
+import { Cart, Home, Payment, ProductDetails, Products, SuccessPayment } from './app/features/index.ts';
 import Layout from './app/shared/layout/layout.tsx';
 import { store } from './app/shared/redux/store.ts';
 import './index.css';
+import PaymentLayout from './app/features/payment/paymentLayout/paymentLayout.tsx';
 
 const router = createBrowserRouter([
   // {
@@ -34,6 +35,24 @@ const router = createBrowserRouter([
       {
         path: 'products/productDetails',
         element: <ProductDetails />,
+      },
+      {
+        path: 'cart',
+        element: <Cart />,
+      },
+      {
+        path: 'Payment',
+        element: <PaymentLayout />,
+        children: [
+          {
+            index: true,
+            element: <Payment />,
+          },
+          {
+            path: 'SuccessPayment',
+            element: <SuccessPayment />,
+          },
+        ],
       },
     ],
   },

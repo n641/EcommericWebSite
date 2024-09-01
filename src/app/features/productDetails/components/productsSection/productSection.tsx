@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { HorizontalList } from '../../../../shared/components';
+import { useNavigate } from 'react-router-dom';
 
 function ProductSection({ Product }: any) {
   const [ActiveImg, setActiveImg] = useState(Product?.images[0]);
   const [Counter, setCounter] = useState(0);
+  const navigate = useNavigate();
 
   return (
     <div className="m-5 flex flex-col gap-8 md:flex-row">
@@ -116,12 +118,15 @@ function ProductSection({ Product }: any) {
         </div>
 
         {/* buttons */}
-        <div className="flex flex-wrap items-center gap-3 w-full">
-          <button className="w-full md:w-1/3 rounded-lg bg-black py-3.5 text-sm font-semibold text-white transition-all duration-100 hover:bg-[var(--main-Color)]">
+        <div className="flex w-full flex-wrap items-center gap-3">
+          <button
+            className="w-full rounded-lg bg-black py-3.5 text-sm font-semibold text-white transition-all duration-100 hover:bg-[var(--main-Color)] md:w-1/3"
+            onClick={() => navigate('/EcommericWebSite/cart')}
+          >
             Buy Now
           </button>
 
-          <button className=" w-full md:w-1/3 truncate whitespace-nowrap rounded-lg border-2 border-black p-3 text-sm font-semibold text-black transition-all duration-100 hover:border-[var(--main-Color)] hover:bg-[var(--main-Color)] hover:text-white">
+          <button className="w-full truncate whitespace-nowrap rounded-lg border-2 border-black p-3 text-sm font-semibold text-black transition-all duration-100 hover:border-[var(--main-Color)] hover:bg-[var(--main-Color)] hover:text-white md:w-1/3">
             Add To Card
           </button>
         </div>

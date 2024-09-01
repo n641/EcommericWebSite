@@ -5,16 +5,18 @@
 :root {
   /* navy , blue , sea , sky */
   --main-Color:#F65D6F; 
-  --second-Color:#E0EDF4;
-  --thired-Color:#F0EDD8;
+  --second-Color:#feeed1;
+  --thired-Color:#8DC3F9;
   --fourth-Color:#2A234D;
-  --fifth-Color:#f8edfc;
+  /* --fifth-Color:#f8edfc; */
+  --fifth-Color:#FCD28D;
 
 
   --Gold-color:#D99F7E;
   --Active-Gold-color:#e09600;
   --bg-Gold-color:#f6bc9a;
-  --bg-color:#F7F7F7
+  --bg-color:#F7F7F7;
+  /* #FCD28D */
 
   font-family: Georgia, 'Times New Roman', Times, serif;
   line-height: 1.5;

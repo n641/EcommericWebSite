@@ -141,8 +141,8 @@ function RatingProduct({ ProductRate, numberOfRating }: any) {
 
       <div className="flex flex-col gap-10">
         {/* rating comments */}
-        {[1, 2, 3, 4, 5].map((item) => (
-          <>
+        {[1, 2, 3, 4, 5].map((item , index) => (
+          <div key={index}>
             <article>
               <div className="mb-4 flex items-center">
                 <img
@@ -248,7 +248,7 @@ function RatingProduct({ ProductRate, numberOfRating }: any) {
               </aside>
             </article>
             <hr />
-          </>
+          </div>
         ))}
       </div>
     </div>
