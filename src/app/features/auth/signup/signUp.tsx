@@ -1,7 +1,8 @@
 import { useFormik } from 'formik';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
-import { CustomeInput, ErrorToasts } from '../../../shared/components';
+import { CustomeInput, ErrorToasts, NavBar } from '../../../shared/components';
+import Cover from '../../../../assets/png/coverIntro.jpg';
 
 function SignUp() {
   let userSchema = Yup.object({
@@ -40,59 +41,56 @@ function SignUp() {
   });
 
   return (
-    <div className="flex flex-1 bg-white">
+    <div className="flex h-lvh items-center justify-center align-middle overflow-auto">
       <ErrorToasts error={'error message'} isError={true} />
 
-      <div className="flex h-lvh w-full flex-col items-center justify-center px-20 align-middle lg:w-1/2">
-        <div className="mb-10 flex lg:hidden">
-          <img
-            src={
-              'https://images.unsplash.com/photo-1513094735237-8f2714d57c13?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzJ8fHNob3BwaW5nfGVufDB8fDB8fHww'
-            }
-            className="border-5 mx-auto h-56 w-56 rounded-full border-white shadow-2xl"
-          />
-        </div>
+      <NavBar/>
 
+      <div className="fixed inset-0 h-screen">
+        <img src={Cover} className="border-5 h-full w-full border-white" />
+        <div className="absolute inset-0  backdrop-blur-sm"></div>
+      </div>
+
+      <div className="z-50 flex flex-col items-center justify-center rounded-xl bg-white px-9 sm:px-20 py-5 align-middle w-auto lg:w-1/3">
         <div className="flex w-full flex-col justify-center self-center">
-          <h1 className="self-start text-[30px] font-bold text-black">
-            SignUp
+          <h1 className="self-start text-[15px] font-bold uppercase text-gray-400">
+            Start For Free
           </h1>
-          <h1 className="self-start text-[12px] text-[var(--fourth-Color)]">
-            Let's Create Your Account For Free
+          <h1 className="my-2 self-start font-sans text-[28px] font-bold text-black">
+            Create new account <span className="text-[var(--main-Color)]">.</span>
+          </h1>
+          <h1 className="self-start text-[14px] font-bold text-gray-400">
+            Let's Create Your Account For{' '}
+            <span className="text-[var(--main-Color)]">Free</span>
           </h1>
 
           <form
             onSubmit={formik.handleSubmit}
             className="mb-3 mt-10 flex w-full flex-col"
           >
-            <div className="grid md:grid-cols-2 md:gap-6">
-              <CustomeInput
-                labelText="First name"
-                onChange={formik.handleChange}
-                value={formik.values.firstName}
-                type="text"
-                name="firstName"
-                onBlur={formik.handleBlur}
-                isError={formik.touched.firstName && formik.errors.firstName}
-                error={formik.errors.firstName}
-              />
-              <CustomeInput
-                labelText="Last name"
-                onChange={formik.handleChange}
-                value={formik.values.lastName}
-                type="text"
-                name="lastName"
-                onBlur={formik.handleBlur}
-                isError={formik.touched.lastName && formik.errors.lastName}
-                error={formik.errors.lastName}
-              />
-            </div>
+            <CustomeInput
+              labelText="First name"
+              onChange={formik.handleChange}
+              value={formik.values.firstName}
+              name="firstName"
+              onBlur={formik.handleBlur}
+              isError={formik.touched.firstName && formik.errors.firstName}
+              error={formik.errors.firstName}
+            />
+            <CustomeInput
+              labelText="Last name"
+              onChange={formik.handleChange}
+              value={formik.values.lastName}
+              name="lastName"
+              onBlur={formik.handleBlur}
+              isError={formik.touched.lastName && formik.errors.lastName}
+              error={formik.errors.lastName}
+            />
 
             <CustomeInput
               labelText="Email Address"
               onChange={formik.handleChange}
               value={formik.values.email}
-              type="email"
               name="email"
               onBlur={formik.handleBlur}
               isError={formik.touched.email && formik.errors.email}
@@ -103,7 +101,6 @@ function SignUp() {
               labelText="password"
               onChange={formik.handleChange}
               value={formik.values.password}
-              type="password"
               name="password"
               onBlur={formik.handleBlur}
               isError={formik.touched.password && formik.errors.password}
@@ -113,7 +110,6 @@ function SignUp() {
               labelText="Confirm Password"
               onChange={formik.handleChange}
               value={formik.values.confirmPassword}
-              type="password"
               name="confirmPassword"
               onBlur={formik.handleBlur}
               isError={
@@ -126,7 +122,6 @@ function SignUp() {
               labelText="Phone number (123-456-7890)"
               onChange={formik.handleChange}
               value={formik.values.phoneNumber}
-              type="password"
               name="phoneNumber"
               onBlur={formik.handleBlur}
               isError={formik.touched.phoneNumber && formik.errors.phoneNumber}
@@ -151,15 +146,6 @@ function SignUp() {
             </Link>
           </h2>
         </div>
-      </div>
-
-      <div className="hidden h-screen w-1/2 items-center justify-center bg-[var(--second-Color)] align-middle lg:flex">
-        <img
-          src={
-            'https://images.unsplash.com/photo-1513094735237-8f2714d57c13?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzJ8fHNob3BwaW5nfGVufDB8fDB8fHww'
-          }
-          className="border-5 h-[300px] w-[300px] rounded-full border-white shadow-2xl"
-        />
       </div>
     </div>
   );

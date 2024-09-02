@@ -20,3 +20,5 @@ export * from './productItem/productItem';
 export * from './skeletonProduct/skeletonProduct'
 
 export * from './checkBoxs/checkBoxs'
+
+export * from './oneTimeInput/oneTimeInput'

@@ -1,7 +1,7 @@
 import { BsHandbag } from 'react-icons/bs';
 import { FaCaretDown } from 'react-icons/fa';
 import { GoPerson } from 'react-icons/go';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Logo from '../../../../assets/logos/LightLogo.png';
 import { useGetAllCategories } from '../../../features/home/hooks/useGetAllCategory';
 
@@ -42,7 +42,6 @@ const ProfileNaviagtor = [
     path: '/',
   },
 ];
-
 
 // const Countries = [
 //   {
@@ -168,11 +167,11 @@ const ProfileNaviagtor = [
 // ];
 
 function NavBar() {
-
   const { isLoadingCategories, Categories } = useGetAllCategories({});
+  const navigation = useNavigate();
 
   return (
-    <nav className="fixed z-30   left-3 right-3 top-5 rounded-2xl bg-white/90  shadow-2xl dark:bg-gray-900">
+    <nav className="fixed left-3 right-3 top-5 z-30 rounded-2xl bg-white/90 shadow-2xl dark:bg-gray-900">
       <div className="mx-auto flex max-w-screen-2xl flex-wrap items-center justify-between px-4 py-1">
         {/* logo */}
         <NavLink to={'/'} className={'flex items-center gap-1'}>
@@ -182,7 +181,7 @@ function NavBar() {
           </span>
         </NavLink>
 
-        <div className="flex items-center space-x-1 gap-10 lg:order-2 lg:space-x-0 rtl:space-x-reverse">
+        <div className="flex items-center gap-10 space-x-1 lg:order-2 lg:space-x-0 rtl:space-x-reverse">
           {/* search */}
           <input
             type="text"
@@ -195,7 +194,7 @@ function NavBar() {
           />
 
           {/* when loged in  */}
-          {true && (
+          {false && (
             <div className="flex items-center gap-2">
               <div className="relative mr-4 flex cursor-pointer items-center gap-1 font-semibold hover:text-[var(--Gold-color)]">
                 <BsHandbag />
@@ -259,8 +258,13 @@ function NavBar() {
           )}
 
           {/* when loged out  */}
-          {false && (
-            <button className="flex items-center gap-1 rounded-md bg-[var(--Active-Gold-color)] px-4 py-1 text-sm font-bold text-white hover:opacity-80">
+          {true && (
+            <button
+              className="flex cursor-pointer items-center gap-1 rounded-md bg-[var(--thired-Color)] px-4 py-1 text-sm font-bold text-white hover:opacity-80"
+              onClick={() => {
+                navigation('/');
+              }}
+            >
               <GoPerson />
               <p className="text-sm text-white">Login</p>
             </button>
@@ -295,11 +299,10 @@ function NavBar() {
 
         {/* links */}
         <div
-          className=" z-10 hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto bg-white"
+          className="z-10 hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto"
           id="navbar-language"
         >
-          <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 bg-white p-4 font-medium dark:border-gray-700 dark:bg-gray-800 lg:mt-0 lg:flex-row lg:space-x-8 lg:border-0 lg:bg-white lg:p-0 lg:dark:bg-gray-900 rtl:space-x-reverse">
-            
+          <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 p-4 font-medium dark:border-gray-700 dark:bg-gray-800 lg:mt-0 lg:flex-row lg:space-x-8 lg:border-0 lg:p-0 lg:dark:bg-gray-900 rtl:space-x-reverse">
             {/* button drop down */}
             <li>
               <button
@@ -320,13 +323,12 @@ function NavBar() {
                   className="py-2 text-sm text-gray-700 dark:text-gray-400"
                   aria-labelledby="dropdownLargeButton"
                 >
-                  {
-                    isLoadingCategories?
-                    <li  className="block px-4 py-2 hover:bg-gray-100 hover:text-[var(--Gold-color)] dark:hover:bg-gray-600">
+                  {isLoadingCategories ? (
+                    <li className="block px-4 py-2 hover:bg-gray-100 hover:text-[var(--Gold-color)] dark:hover:bg-gray-600">
                       <h1>Loadin</h1>
                     </li>
-                    :
-                    Categories?.data.map((item :any) => {
+                  ) : (
+                    Categories?.data.map((item: any) => {
                       return (
                         <li key={item.name}>
                           <NavLink
@@ -338,8 +340,7 @@ function NavBar() {
                         </li>
                       );
                     })
-                  }
-                  
+                  )}
                 </ul>
                 <div className="py-1">
                   <NavLink

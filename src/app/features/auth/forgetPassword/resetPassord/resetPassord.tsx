@@ -1,31 +1,37 @@
 import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import { CustomeInput, ErrorToasts, NavBar } from '../../../shared/components';
-import Cover from '../../../../assets/png/coverIntro.jpg';
+import Cover from '../../../../../assets/png/coverIntro.jpg';
+import {
+  CustomeInput,
+  ErrorToasts,
+  NavBar,
+} from '../../../../shared/components';
+
 let userSchema = Yup.object({
-  email: Yup.string()
-    .email('Invalid email format')
-    .required('Email is required'),
   password: Yup.string()
-    .required('Password is required')
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
-    ),
+  .required('Password is required')
+  .matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
+  ),
+confirmPassword: Yup.string()
+  .oneOf([Yup.ref('password'), undefined], 'Passwords must match')
+  .required('Confirm Password is required'),
 });
-function SignUp() {
+function ResetPassord() {
+
   const navigate = useNavigate();
 
   const OnSubmitHandler = (values: any) => {
     alert(JSON.stringify(values, null, 2));
-    navigate('/EcommericWebSite');
+    navigate('/');
   };
 
   const formik = useFormik({
     initialValues: {
-      email: '',
       password: '',
+      confirmPassword: '',
     },
     onSubmit: OnSubmitHandler,
     validationSchema: userSchema,
@@ -46,15 +52,15 @@ function SignUp() {
 
         <div className="flex w-full flex-col justify-center self-center">
           <h1 className="self-start text-[15px] font-bold uppercase text-gray-400">
-            Welcome Back!
+            Recevied the code!
           </h1>
           <h1 className="my-2 self-start font-sans text-[28px] font-bold text-black">
-            Login <span className="text-[var(--main-Color)]">.</span>
+            Reset Password <span className="text-[var(--main-Color)]">.</span>
           </h1>
 
-          <h1 className="self-start text-[14px] font-bold text-gray-400">
-            Let's Create Your Account For{' '}
-            <span className="text-[var(--main-Color)]">Free</span>
+          <h1 className="self-start text-[14px] font-bold text-gray-400 lowercase ">
+            Create nEW pASSWORD TO YOUR{' '}
+            <span className="text-[var(--main-Color)]">ACCOUNT</span>
           </h1>
 
           <form
@@ -62,28 +68,25 @@ function SignUp() {
             className="mb-3 mt-5 flex w-full flex-col"
           >
             <CustomeInput
-              labelText="Email Address"
+              labelText="Password"
               onChange={formik.handleChange}
-              value={formik.values.email }
-              name="email"
-              onBlur={formik.handleBlur}
-              isError={formik.touched.email && formik.errors.email}
-              error={formik.errors.email}
-            />
-
-            <CustomeInput
-              labelText="password"
-              onChange={formik.handleChange}
-              value={formik.values.password}
+              value={formik.values.password }
               name="password"
               onBlur={formik.handleBlur}
               isError={formik.touched.password && formik.errors.password}
               error={formik.errors.password}
             />
 
-            <Link to={'/ForgetPassword'} className='cursor-pointer' >
-              <p className='font-bold text-[16px] text-red-500'>Forgot Password ?</p>
-            </Link>
+            <CustomeInput
+              labelText="Confirm Password"
+              onChange={formik.handleChange}
+              value={formik.values.confirmPassword}
+              name="confirmPassword"
+              onBlur={formik.handleBlur}
+              isError={formik.touched.confirmPassword && formik.errors.confirmPassword}
+              error={formik.errors.confirmPassword}
+            />
+
 
             <button
               type="submit"
@@ -93,19 +96,11 @@ function SignUp() {
               Submit
             </button>
           </form>
-
-          <h2 className="text-center mt-4">
-            Dont't Have Account{'  '}
-            <Link to={'/SignUp'}>
-              <span className="cursor-pointer font-extrabold text-[var(--fourth-Color)]">
-                SignUp!
-              </span>
-            </Link>
-          </h2>
+          
         </div>
       </div>
     </div>
   );
 }
 
-export default SignUp;
+export  {ResetPassord}
