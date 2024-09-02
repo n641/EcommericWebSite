@@ -51,7 +51,7 @@ function SignUp() {
         <div className="absolute inset-0  backdrop-blur-sm"></div>
       </div>
 
-      <div className="z-50 flex flex-col items-center justify-center rounded-xl bg-white px-9 sm:px-20 py-5 align-middle w-auto lg:w-1/3">
+      <div className="z-50 flex flex-col items-center justify-center rounded-xl bg-white px-9 sm:px-20 py-5 align-middle w-auto lg:w-1/3 mt-20 sm:mt-0">
         <div className="flex w-full flex-col justify-center self-center">
           <h1 className="self-start text-[15px] font-bold uppercase text-gray-400">
             Start For Free

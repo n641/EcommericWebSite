@@ -35,7 +35,7 @@ function VerfyCode() {
     validationSchema: userSchema,
   });
 
-  const OnSubmitCode = (values: any) => {
+  const OnSubmitCode = () => {
     navigate('/ResetPassword');
   };
 

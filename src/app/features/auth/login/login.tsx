@@ -32,7 +32,7 @@ function SignUp() {
   });
 
   return (
-    <div className="flex h-lvh items-center justify-center align-middle">
+    <div className="flex h-lvh items-center justify-center align-middle mt-20 sm:mt-0">
       <ErrorToasts error={'error message'} isError={true} />
 
       <NavBar/>
