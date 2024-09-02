@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import { FaArrowCircleRight, FaArrowCircleUp } from 'react-icons/fa';
-import { IoCheckmarkCircle } from 'react-icons/io5';
-import { IoCheckmarkCircleOutline } from 'react-icons/io5';
+import { useState } from 'react';
+import { IoCheckmarkCircle, IoCheckmarkCircleOutline } from 'react-icons/io5';
 function SetUpPayment() {
   const [ChoosePaymentOption, setChoosePaymentOption] = useState(1);
 
@@ -10,7 +8,6 @@ function SetUpPayment() {
       <h1 className="mb-4 mt-5 text-lg font-bold">Payment Method</h1>
 
       <div className="ml-2 mt-4 rounded-xl bg-white shadow-lg">
-
         {/* credit card option */}
         <div className="p-4">
           <div

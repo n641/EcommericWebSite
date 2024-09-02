@@ -1,4 +1,3 @@
-import React from 'react';
 
 function RatingProduct({ ProductRate, numberOfRating }: any) {
   return (
@@ -141,7 +140,7 @@ function RatingProduct({ ProductRate, numberOfRating }: any) {
 
       <div className="flex flex-col gap-10">
         {/* rating comments */}
-        {[1, 2, 3, 4, 5].map((item , index) => (
+        {[1, 2, 3, 4, 5].map((_ , index) => (
           <div key={index}>
             <article>
               <div className="mb-4 flex items-center">

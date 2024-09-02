@@ -1,6 +1,4 @@
-import { useState } from 'react';
-import { IoIosRadioButtonOff } from 'react-icons/io';
-import { IoIosRadioButtonOn } from 'react-icons/io';
+import { IoIosRadioButtonOff, IoIosRadioButtonOn } from 'react-icons/io';
 function AddressItem({ setChoosenAddress, ChoosenAddress, item }: any) {
   return (
     <div className="flex gap-2 border border-gray-300 p-2 my-2 rounded-xl max-w-[600px] item-start cursor-pointer z-10"

@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import Stepper from './components/stepper';
-import { SuccessPayment } from '../successPayment/successPayment';
-import { Payment } from '../payment/payment';
-import SetUpAddress from '../payment/components/setUpAddress/setUpAddress';
-import ProductItem from './components/productItem/productItem';
+import { useState } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { Payment } from '../payment/payment';
+import { SuccessPayment } from '../successPayment/successPayment';
+import ProductItem from './components/productItem/productItem';
+import Stepper from './components/stepper';
 
 function PaymentLayout() {
   const [Progress, setProgress] = useState(2);

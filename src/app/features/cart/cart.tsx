@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import logo from '../../../assets/logos/LightLogo.png';
 import ProductItem from './components/productItem';
-import { useNavigate } from 'react-router-dom';
 function Cart() {
   const Navigate = useNavigate();
 

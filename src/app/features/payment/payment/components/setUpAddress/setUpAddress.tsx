@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import AddressItem from '../../../../../shared/components/addressItem/addressItem';
+import { useState } from 'react';
 import { FaArrowCircleRight, FaArrowCircleUp } from 'react-icons/fa';
+import AddressItem from '../../../../../shared/components/addressItem/addressItem';
 
 function SetUpAddress({ setChoosenAddress, ChoosenAddress }: any) {
   const [ChooseAddressOption, setChooseAddressOption] = useState(1);

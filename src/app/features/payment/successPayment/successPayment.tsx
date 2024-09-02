@@ -1,9 +1,5 @@
-import React from 'react'
-
 function SuccessPayment() {
-  return (
-    <div>SuccessPayment</div>
-  )
+  return <div>SuccessPayment</div>;
 }
 
-export  {SuccessPayment}
+export { SuccessPayment };
