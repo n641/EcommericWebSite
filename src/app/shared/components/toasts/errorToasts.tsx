@@ -9,7 +9,7 @@ function ErrorToasts({ error, isError }: Props) {
   return (
     <div
       id="toast-danger"
-      className="absolute left-10 top-20 mb-4 flex w-full max-w-xs items-center rounded-lg bg-red-500 p-4 text-gray-500 shadow-xl dark:bg-gray-800 dark:text-gray-400"
+      className="absolute left-10 top-20 mb-4 flex w-full max-w-xs items-center rounded-lg bg-red-500 p-4 text-gray-500 shadow-xl dark:bg-gray-800 dark:text-gray-400 z-50"
       role="alert"
     >
       <div className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">

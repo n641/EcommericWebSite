@@ -8,11 +8,11 @@ import { useGetAllCategories } from '../../../features/home/hooks/useGetAllCateg
 const Navigators = [
   {
     name: 'Home',
-    path: '/',
+    path: '/Home/',
   },
   {
     name: 'Products',
-    path: 'products',
+    path: '/Home/products',
   },
   {
     name: 'Brands',

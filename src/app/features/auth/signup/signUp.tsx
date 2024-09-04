@@ -41,23 +41,28 @@ function SignUp() {
   });
 
   return (
-    <div className="flex h-lvh items-center justify-center align-middle overflow-auto">
+    <div className="flex flex-col h-lvh items-center justify-center overflow-auto align-middle">
       <ErrorToasts error={'error message'} isError={true} />
 
-      <NavBar/>
+      <NavBar />
 
       <div className="fixed inset-0 h-screen">
         <img src={Cover} className="border-5 h-full w-full border-white" />
-        <div className="absolute inset-0  backdrop-blur-sm"></div>
+        <div className="absolute inset-0 backdrop-blur-sm"></div>
       </div>
 
-      <div className="z-50 flex flex-col items-center justify-center rounded-xl bg-white px-9 sm:px-20 py-5 align-middle w-auto lg:w-1/3 mt-20 sm:mt-0">
+      <div className="h-[100%]" >
+        
+      </div>
+
+      <div className="z-50 mt-20 flex w-auto flex-col items-center justify-center rounded-xl bg-white px-9 py-5 align-middle sm:mt-0 sm:px-20 lg:w-1/3">
         <div className="flex w-full flex-col justify-center self-center">
           <h1 className="self-start text-[15px] font-bold uppercase text-gray-400">
             Start For Free
           </h1>
           <h1 className="my-2 self-start font-sans text-[28px] font-bold text-black">
-            Create new account <span className="text-[var(--main-Color)]">.</span>
+            Create new account{' '}
+            <span className="text-[var(--main-Color)]">.</span>
           </h1>
           <h1 className="self-start text-[14px] font-bold text-gray-400">
             Let's Create Your Account For{' '}

@@ -5,7 +5,16 @@ import { createRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Cart, Home, Payment, ProductDetails, Products, ResetPassord, SuccessPayment, VerfyCode } from './app/features/index.ts';
+import {
+  Cart,
+  Home,
+  Payment,
+  ProductDetails,
+  Products,
+  ResetPassord,
+  SuccessPayment,
+  VerfyCode,
+} from './app/features/index.ts';
 import Layout from './app/shared/layout/layout.tsx';
 import { store } from './app/shared/redux/store.ts';
 import './index.css';
@@ -31,7 +40,7 @@ const router = createBrowserRouter([
     element: <ResetPassord />,
   },
   {
-    path: '/EcommericWebSite',
+    path: '/Home',
     element: <Layout />,
     children: [
       {
@@ -41,9 +50,15 @@ const router = createBrowserRouter([
       {
         path: 'products',
         element: <Products />,
+        children: [
+          {
+            path: 'productDetails',
+            element: <ProductDetails />,
+          },
+        ],
       },
       {
-        path: 'products/productDetails',
+        path: 'productDetails',
         element: <ProductDetails />,
       },
       {

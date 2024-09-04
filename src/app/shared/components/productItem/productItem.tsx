@@ -54,7 +54,7 @@ function ProductItem({ item }: any) {
           <button
             className="w-full rounded-md bg-black py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-white group-hover:w-[70%] group-hover:animate-bounce group-hover:bg-[var(--main-Color)]"
             onClick={() =>
-              navigate('/EcommericWebSite/products/productDetails', {
+              navigate('/Home/productDetails', {
                 state: { Product: item },
               })
             }
