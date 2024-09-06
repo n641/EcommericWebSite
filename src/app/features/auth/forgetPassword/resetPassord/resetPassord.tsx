@@ -39,7 +39,7 @@ function ResetPassord() {
 
   return (
     <div className="flex h-lvh items-center justify-center align-middle">
-      <ErrorToasts error={'error message'} isError={true} />
+      {/* <ErrorToasts error={'error message'} isError={true} /> */}
 
       <NavBar/>
 

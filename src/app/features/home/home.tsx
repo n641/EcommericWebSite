@@ -1,4 +1,4 @@
-import { MainSlider } from '../../shared/components';
+import { MainSlider, ScrollToTop } from '../../shared/components';
 import CategoriesSection from './components/categoriesSection/categoriesSection';
 import PopularCollectionSection from './components/popularCollectionSection/popularCollectionSection';
 import RecommendedProductSection from './components/recommendedProductSection/recommendedProductSection';
@@ -17,6 +17,7 @@ function Home() {
   }
   return (
     <div className="space-y-10">
+      <ScrollToTop/>
       <>
         <MainSlider />
 

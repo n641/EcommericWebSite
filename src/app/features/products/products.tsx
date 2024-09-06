@@ -4,13 +4,20 @@ import {
   BreadCramp,
   FilterSideBar,
   ProductItem,
+  ScrollToTop,
 } from '../../shared/components';
 import { useGetAllProducts } from './hooks/useGetRecentlyProducts';
 import SkeletonProducts from './components/skeletonProducts';
+import { useLocation } from 'react-router-dom';
+import EmptyProduct from './components/emptyProduct';
 
 function Products() {
+  const location = useLocation();
+  const { categoryId , BrandId } :any = location.state || {};
   const [openDrawer, setOpenDrawer] = useState(false);
-  const { isLoadingProducts, Products } = useGetAllProducts({});
+  const { isLoadingProducts, Products } = useGetAllProducts({
+    categoryId , BrandId
+  });
   const [FilterProducts, setFilterProducts] = useState(Products?.data);
   const [Search, setSearch]: any = useState(null);
 
@@ -36,10 +43,17 @@ function Products() {
     setFilterProducts(Products?.data);
   }, [Products?.data]);
 
- 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth', // Smooth scroll
+    });
+  }, [Products?.data]);
 
   return (
     <div className="mx-5">
+      <ScrollToTop />
+
       <div className="flex gap-7">
         <div
           className="flex cursor-pointer items-center gap-2 rounded-lg p-1 hover:bg-gray-200"
@@ -68,7 +82,10 @@ function Products() {
 
           {isLoadingProducts ? (
             <SkeletonProducts />
-          ) : (
+          ) :
+          FilterProducts?.length === 0 ?
+          <EmptyProduct/>
+          : (
             <div
               className={`mt-5 grid flex-1 items-center gap-y-5 self-center sm:gap-5 ${
                 true

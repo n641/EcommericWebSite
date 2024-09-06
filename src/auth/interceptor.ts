@@ -1,8 +1,9 @@
 import axios, { AxiosError } from 'axios';
+import { useSelector } from 'react-redux';
 
 const getAccessToken = () => {
   try {
-    return '';
+    return JSON.parse(localStorage.getItem('UserData') as any)?.token ;
   } catch (error) {
     // Error retrieving data
     console.log(error, 'logged in client error');
@@ -18,8 +19,9 @@ const apiClient = axios.create({
 export const apiService = (props: any) => {
   const { needsAuth = false, contentType = false } = props;
 
-  if (needsAuth) {
-    apiClient.defaults.headers.common.Authorization = getAccessToken();
+
+  if (needsAuth === true) {
+    apiClient.defaults.headers.common['token'] = getAccessToken();
   }
   if (contentType === true) {
     apiClient.defaults.headers.common['Content-Type'] = 'multipart/form-data';
@@ -51,12 +53,16 @@ export function extractAPIErrorResponse(apiClient: any) {
     async function (error: AxiosError) {
       (error as any).originalMessage = error.message;
 
-      Object.defineProperty(error, 'message', {
-        get: function () {
-          return `${error?.response?.data}`;
-        },
-      });
-      return Promise.reject(error);
+      if (error?.response?.status === 401) {
+        window.location.href = '/';
+      } else {
+        Object.defineProperty(error, 'message', {
+          get: function () {
+            return `${error?.response?.data}`;
+          },
+        });
+        return Promise.reject(error);
+      }
     }
   );
 }

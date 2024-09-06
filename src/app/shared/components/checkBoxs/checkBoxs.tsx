@@ -3,8 +3,8 @@ function CheckBoxs({ data, setSelectedData }: any) {
   return (
     <div>
       <div className="flex flex-col gap-3">
-        {data?.map((item: any) => (
-          <label className="flex items-center">
+        {data?.map((item: any , index: number) => (
+          <label key={index} className="flex items-center">
             <input
               type="checkbox"
               name="item1"

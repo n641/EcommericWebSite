@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { IoCheckmarkCircle, IoCheckmarkCircleOutline } from 'react-icons/io5';
-function SetUpPayment() {
-  const [ChoosePaymentOption, setChoosePaymentOption] = useState(1);
+function SetUpPayment({ChoosePaymentOption , setChoosePaymentOption}:any) {
 
   return (
     <div>
@@ -33,7 +32,7 @@ function SetUpPayment() {
           </div>
 
           {/* credit card inputs */}
-          {ChoosePaymentOption === 1 && (
+          {/* {ChoosePaymentOption === 1 && (
             <div>
               <div>
                 <label
@@ -99,7 +98,7 @@ function SetUpPayment() {
                 </div>
               </div>
             </div>
-          )}
+          )} */}
         </div>
 
         {/* cash */}

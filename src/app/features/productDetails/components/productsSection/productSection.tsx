@@ -1,12 +1,60 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { HorizontalList } from '../../../../shared/components';
 import { useNavigate } from 'react-router-dom';
+import { useAddToCart } from '../../../../../auth/addToCart/useAddToCart';
+import { useUpdateCartCount } from '../../../../../auth/updateCartCounter/useUpdateCartCount';
 
 function ProductSection({ Product }: any) {
   const [ActiveImg, setActiveImg] = useState(Product?.images[0]);
-  const [Counter, setCounter] = useState(0);
+  const [Counter, setCounter] = useState(1);
+  const [ToCart, setToCart] = useState(false);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setActiveImg(Product?.images[0]);
+  }, [Product]);
+
+  const { AddToCart, isLoading, error, isError, isSuccess, data } =
+    useAddToCart({
+      onErrorHandler: (error) => {},
+      onSuccessHandler: (data) => {
+        if (Counter > 1) {
+          UpdateProductCartCount({
+            productId: Product?.id,
+            count: Counter,
+          });
+        } else {
+          if (ToCart) {
+            navigate('/Home/Cart');
+          }else{
+            navigate('/Home');
+
+          }
+        }
+      },
+    });
+
+  const { UpdateProductCartCount, isLoadingUpdateCart } = useUpdateCartCount({
+    onErrorHandler: (error) => {},
+    onSuccessHandler: (data) => {
+      console.log('upadtcounter', data);
+      if (ToCart) {
+        navigate('/Home/Cart');
+      }else{
+        navigate('/Home');
+      }
+    },
+  });
+
+  const AddToCART = () => {
+    AddToCart({
+      productId: Product?.id,
+    });
+  };
+
+  const ScreenLoading = isLoading || isLoadingUpdateCart;
 
   return (
     <div className="m-5 flex flex-col gap-8 md:flex-row">
@@ -86,7 +134,7 @@ function ProductSection({ Product }: any) {
               <button
                 className={`text-2xl ${Counter === 0 && 'text-gray-400'} `}
                 onClick={() => {
-                  if (Counter > 0) setCounter(Counter - 1);
+                  if (Counter > 1) setCounter(Counter - 1);
                 }}
               >
                 -
@@ -121,13 +169,23 @@ function ProductSection({ Product }: any) {
         <div className="flex w-full flex-wrap items-center gap-3">
           <button
             className="w-full rounded-lg bg-black py-3.5 text-sm font-semibold text-white transition-all duration-100 hover:bg-[var(--main-Color)] md:w-1/3"
-            onClick={() => navigate('/Home/cart')}
+            onClick={() => {
+              setToCart(true);
+              AddToCART();
+            }}
+            disabled={ScreenLoading}
           >
-            Buy Now
+            {ScreenLoading ? 'Loading...' : ' Buy Now'}
           </button>
 
-          <button className="w-full truncate whitespace-nowrap rounded-lg border-2 border-black p-3 text-sm font-semibold text-black transition-all duration-100 hover:border-[var(--main-Color)] hover:bg-[var(--main-Color)] hover:text-white md:w-1/3">
-            Add To Card
+          <button
+            className="w-full truncate whitespace-nowrap rounded-lg border-2 border-black p-3 text-sm font-semibold text-black transition-all duration-100 hover:border-[var(--main-Color)] hover:bg-[var(--main-Color)] hover:text-white md:w-1/3"
+            onClick={() => {
+              AddToCART();
+            }}
+            disabled={ScreenLoading}
+          >
+            {ScreenLoading ? 'Loading...' : ' Add To Card'}
           </button>
         </div>
       </div>

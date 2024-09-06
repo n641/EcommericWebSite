@@ -1,17 +1,69 @@
 import { useState } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Payment } from '../payment/payment';
 import { SuccessPayment } from '../successPayment/successPayment';
 import ProductItem from './components/productItem/productItem';
 import Stepper from './components/stepper';
+import { ScrollToTop, Spinner } from '../../../shared/components';
+import { usePostCashPayment } from '../payment/hooks/usePostCashPayment';
+import { usePostPayCreadit } from '../payment/hooks/usePostPayCredit';
 
 function PaymentLayout() {
-  const [Progress, setProgress] = useState(2);
-  const [ChoosenAddress, setChoosenAddress] = useState(1);
+  const location = useLocation();
   const navigation = useNavigate();
+
+  const [Progress, setProgress] = useState(2);
+
+  const [ChoosenAddress, setChoosenAddress]: any = useState(null);
+  const [ChoosePaymentOption, setChoosePaymentOption] = useState(1);
+
+  const { cartInfo } = location.state || {};
+  const { PayCash, isLoading, error, isError, isSuccess, data } =
+    usePostCashPayment({
+      onErrorHandler: (error) => {},
+      onSuccessHandler: (data) => {
+        navigation('/Home');
+      },
+    });
+
+  const {
+    PayCredit,
+    isLoadingPayCredit,
+    isErrorPayCredit,
+    errorPayCredit,
+    dataPayCredit,
+    isSuccessPayCredit,
+  } = usePostPayCreadit({
+    onErrorHandler: (error) => {},
+    onSuccessHandler: (data) => {
+      window.location.href = data?.session?.url;
+      // console.warn("data" , data);
+    },
+  });
+
+  const SubmitPayment = () => {
+    if (ChoosenAddress) {
+      const payLoad = {
+        cartId: cartInfo?.cartId,
+        shippingAddress: {
+          details: ChoosenAddress?.details, 
+          phone: ChoosenAddress?.phone,
+          city: ChoosenAddress?.city,
+        },
+      };
+      if (ChoosePaymentOption === 1) {
+        PayCredit(payLoad);
+      } else {
+        PayCash(payLoad);
+      }
+      console.warn(payLoad);
+    }
+  };
+
   return (
     <div className="mx-5 grid-cols-5 gap-5 xl:grid">
+      <ScrollToTop />
       {/* ÷screen */}
       <div className="col-span-4">
         <div>
@@ -21,7 +73,7 @@ function PaymentLayout() {
               className="cursor-pointer"
               onClick={() => {
                 if (Progress === 2) {
-                  navigation('/EcommericWebSite/cart');
+                  navigation('/Home/cart');
                 } else if (Progress > 1) {
                   setProgress(Progress - 1);
                 }
@@ -40,6 +92,8 @@ function PaymentLayout() {
                 setChoosenAddress={setChoosenAddress}
                 ChoosenAddress={ChoosenAddress}
                 setProgress={setProgress}
+                ChoosePaymentOption={ChoosePaymentOption}
+                setChoosePaymentOption={setChoosePaymentOption}
               />
             ) : Progress === 4 ? (
               <SuccessPayment />
@@ -55,18 +109,16 @@ function PaymentLayout() {
         <div className="mx-3 2xl:mx-0 2xl:text-end">
           <h1 className="text-3xl font-bold 2xl:text-lg">Summary</h1>
           <h1 className="text-sm font-bold text-gray-400">
-            2 items in your bags
+            {cartInfo?.numOfCartItems} items in your bags
           </h1>
         </div>
 
         <hr className="my-4 2xl:my-9" />
 
         <div className="flex max-h-[350px] flex-wrap gap-5 overflow-auto p-3 2xl:flex-row">
-          <ProductItem />
-          <ProductItem />
-          <ProductItem />
-          <ProductItem />
-          <ProductItem />
+          {cartInfo?.data?.products?.map((item: any, index: number) => {
+            return <ProductItem key={index} item={item} />;
+          })}
         </div>
 
         <div className="rounded-xl p-4">
@@ -74,7 +126,9 @@ function PaymentLayout() {
 
           <div className="mt-5 flex items-center justify-between">
             <p className="text-[12px] text-gray-500">Cart SubTotal</p>
-            <p className="text-[11px] text-black">$20</p>
+            <p className="text-[11px] text-black">
+              ${cartInfo?.data?.totalCartPrice - 10}
+            </p>
           </div>
           <div className="mt-1 flex items-center justify-between">
             <p className="text-[12px] text-gray-500">Fee's</p>
@@ -86,7 +140,9 @@ function PaymentLayout() {
           </div>
           <div className="mt-1 flex items-center justify-between">
             <p className="text-[14px] text-black">Total</p>
-            <p className="text-md font-bold text-black">$22</p>
+            <p className="text-md font-bold text-black">
+              ${cartInfo?.data?.totalCartPrice}
+            </p>
           </div>
         </div>
 
@@ -103,10 +159,12 @@ function PaymentLayout() {
         </div>
 
         <button
-          className="mt-4 w-full rounded-xl bg-black py-1.5 font-bold text-white hover:opacity-75 xl:bg-[var(--fifth-Color)] xl:text-black"
-          onClick={() => setProgress(3)}
+          disabled={isLoading || !ChoosenAddress?.details || isLoadingPayCredit}
+          className="mt-4 flex w-full justify-center gap-2 rounded-xl bg-black py-1.5 text-center font-bold text-white hover:opacity-75 disabled:opacity-25 xl:bg-[var(--fifth-Color)] xl:text-black"
+          onClick={SubmitPayment}
         >
-          Payment $120
+          {(isLoading ||isLoadingPayCredit) && <Spinner />}
+          Payment ${cartInfo?.data?.totalCartPrice}
         </button>
       </div>
     </div>

@@ -7,3 +7,6 @@ export * from './payment/successPayment/successPayment'
 
 export * from './auth/forgetPassword/resetPassord/resetPassord'
 export * from './auth/forgetPassword/verfyCode/verfyCode'
+export * from './orders/orders'
+
+export * from './notFound/notFound'

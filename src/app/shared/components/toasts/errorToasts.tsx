@@ -1,15 +1,23 @@
+import { useEffect, useState } from 'react';
+
 interface Props {
-  error: string;
+  error: any;
   isError: boolean;
 }
 function ErrorToasts({ error, isError }: Props) {
+  console.log(error?.response?.data?.message);
+  const [ShowError, setShowError] = useState(isError);
+
+  useEffect(() => {
+    setShowError(isError);
+  }, [isError]);
   if (!isError) {
     return;
   }
   return (
     <div
       id="toast-danger"
-      className="absolute left-10 top-20 mb-4 flex w-full max-w-xs items-center rounded-lg bg-red-500 p-4 text-gray-500 shadow-xl dark:bg-gray-800 dark:text-gray-400 z-50"
+      className={`${ShowError ? 'absolute animate-bounce' : 'hidden'} left-10 top-32 z-50 mb-4 flex w-full max-w-xs items-center rounded-lg bg-red-500 p-4 text-gray-500 shadow-xl dark:bg-gray-800 dark:text-gray-400`}
       role="alert"
     >
       <div className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
@@ -24,14 +32,16 @@ function ErrorToasts({ error, isError }: Props) {
         </svg>
         <span className="sr-only">Error icon</span>
       </div>
+
       <div className="ms-3 text-sm font-normal text-white">
-        {isError && error}
+        {isError && error?.response?.data?.message}
       </div>
       <button
         type="button"
         className="-mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-red-100 p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:bg-gray-800 dark:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-white"
         data-dismiss-target="#toast-danger"
         aria-label="Close"
+        onClick={() => setShowError(false)}
       >
         <span className="sr-only">Close</span>
         <svg

@@ -1,4 +1,9 @@
+import { useNavigate } from 'react-router-dom';
+import { useAddToCart } from '../../../../../auth/addToCart/useAddToCart';
+import { Spinner } from '../../../../shared/components';
+
 const CategoryItem = ({ product }: any) => {
+  const navigation = useNavigate();
   return (
     <div className="grid grid-cols-3 gap-2 rounded-xl bg-[var(--fifth-Color)] p-2">
       <img
@@ -26,7 +31,13 @@ const CategoryItem = ({ product }: any) => {
           </div>
         </div>
 
-        <button className="rounded-md border-2 border-black p-2 text-[8px] font-medium text-black xl:text-[70%]">
+        <button className="rounded-md border-2 border-black p-2 text-[8px] font-medium text-black xl:text-[70%] hover:bg-[var(--main-Color)] hover:text-white hover:border-[var(--main-Color)]"
+        onClick={() =>
+          navigation('/Home/productDetails', {
+            state: { Product: product },
+          })
+        }
+        >
           View Products
         </button>
       </div>
@@ -34,6 +45,20 @@ const CategoryItem = ({ product }: any) => {
   );
 };
 function RecommendedProductSection({ Products }: any) {
+  const navigation = useNavigate();
+  const { AddToCart, isLoading, error, isError, isSuccess, data } =
+    useAddToCart({
+      onErrorHandler: (error) => {},
+      onSuccessHandler: (data) => {
+        // navigate('/Home/Cart');
+      },
+    });
+
+  const AddToCART = (item: any) => {
+    AddToCart({
+      productId: item?.id,
+    });
+  };
   return (
     <div className="my-7 grid items-center gap-5 lg:grid-cols-3">
       <div className="grid items-center justify-center gap-4 rounded-xl bg-[var(--second-Color)] p-4 align-middle sm:grid-cols-2 lg:col-span-2">
@@ -82,11 +107,21 @@ function RecommendedProductSection({ Products }: any) {
             </div>
 
             <div className="mt-10 flex w-full gap-3 lg:flex-row">
-              <button className="w-[45%] truncate whitespace-nowrap rounded-lg bg-black py-3.5 text-sm font-semibold text-white">
-                Buy Now
+              <button
+                className="w-[45%] truncate whitespace-nowrap rounded-lg bg-black py-3.5 text-sm font-semibold text-white hover:bg-[var(--main-Color)] flex justify-center items-center"
+                onClick={() => AddToCART(Products?.[0])}
+              >
+                {isLoading ? <Spinner /> : 'Buy Now'}
               </button>
 
-              <button className="w-[45%] truncate whitespace-nowrap rounded-lg border-2 border-black p-3 text-sm font-semibold text-black">
+              <button
+                className="w-[45%] truncate whitespace-nowrap rounded-lg border-2 border-black p-3 text-sm font-semibold text-black hover:border-[var(--main-Color)] hover:bg-[var(--main-Color)] hover:text-white"
+                onClick={() =>
+                  navigation('/Home/productDetails', {
+                    state: { Product: Products?.[0] },
+                  })
+                }
+              >
                 Explor More
               </button>
             </div>

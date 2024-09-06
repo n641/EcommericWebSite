@@ -1,6 +1,6 @@
 import SetUpAddress from './components/setUpAddress/setUpAddress';
 import SetUpPayment from './components/setUpPayment/setUpPayment';
-function Payment({ setChoosenAddress, ChoosenAddress }: any) {
+function Payment({ setChoosenAddress, ChoosenAddress , ChoosePaymentOption , setChoosePaymentOption}: any) {
   return (
     <div>
       <SetUpAddress
@@ -8,7 +8,8 @@ function Payment({ setChoosenAddress, ChoosenAddress }: any) {
         ChoosenAddress={ChoosenAddress}
       />
 
-      <SetUpPayment />
+      <SetUpPayment ChoosePaymentOption={ChoosePaymentOption}
+                 setChoosePaymentOption={setChoosePaymentOption}/>
     </div>
   );
 }

@@ -1,5 +1,8 @@
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
 function AllBrandsSection({ Brands }: any) {
-  console.log(Brands);
+  const navigation = useNavigate();
   return (
     <div className="mt-10 ">
       <h1 className="text-3xl font-semibold">All Brands</h1>
@@ -9,6 +12,7 @@ function AllBrandsSection({ Brands }: any) {
           <div
             key={index}
             className="cursor-pointer border bg-white p-1 transition-all hover:scale-110 hover:border-[var(--main-Color)] rounded-xl"
+            onClick={() => navigation(`/Home/products`, { state: { BrandId: item?._id } })}
           >
             <img
               src={item?.image}
@@ -19,7 +23,7 @@ function AllBrandsSection({ Brands }: any) {
         ))}
       </div>
     </div>
-  );
+  );  
 }
 
 export default AllBrandsSection;

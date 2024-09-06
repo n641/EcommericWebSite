@@ -4,9 +4,12 @@ import { GetAllProducts } from '../services/getAllproducts';
 export const useGetAllProducts = ({
   onErrorHandler,
   onSuccessHandler,
+  categoryId , BrandId
 }: {
   onErrorHandler?: (error: any) => void;
   onSuccessHandler?: (data: any) => void;
+  categoryId?: string;
+  BrandId?: string;
 }) => {
   const {
     isLoading: isLoadingProducts,
@@ -14,7 +17,7 @@ export const useGetAllProducts = ({
     error: errorProducts,
     data: Products,
     isSuccess: isSuccessProducts,
-  } = useQuery('GetAllProducts', GetAllProducts, {
+  } = useQuery(['GetAllProducts', categoryId , BrandId], GetAllProducts, {
     onError: (error: any) => {
       if (onErrorHandler) onErrorHandler(error);
     },

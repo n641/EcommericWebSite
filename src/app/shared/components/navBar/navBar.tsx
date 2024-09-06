@@ -4,6 +4,12 @@ import { GoPerson } from 'react-icons/go';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Logo from '../../../../assets/logos/LightLogo.png';
 import { useGetAllCategories } from '../../../features/home/hooks/useGetAllCategory';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { useState } from 'react';
+import { useGetAllBrands } from '../../../features/home/hooks/useGetAllBrands';
+import { SignOut } from '../../redux/userSlice';
+import { useGetCart } from '../../../../auth/getCartData/useGetCart';
 
 const Navigators = [
   {
@@ -15,33 +21,364 @@ const Navigators = [
     path: '/Home/products',
   },
   {
-    name: 'Brands',
-    path: '/',
-  },
-  {
     name: 'WishList',
-    path: '/',
+    path: '/Home/WishList',
   },
 ];
 
 const ProfileNaviagtor = [
   {
-    name: 'Home',
-    path: '/',
-  },
-  {
-    name: 'Products',
-    path: '/',
-  },
-  {
-    name: 'Brands',
-    path: '/',
-  },
-  {
-    name: 'AboutUS',
-    path: '/',
+    name: 'Orders',
+    path: '/Home/allorders',
   },
 ];
+
+function NavBar() {
+  const navigation = useNavigate();
+  const dispatch = useDispatch();
+  const isLogin = useSelector((state: RootState) => state.user.isLogin);
+  const userData = useSelector((state: RootState) => state.user);
+
+  const { isLoadingCategories, Categories } = useGetAllCategories({});
+  const { isLoadingBrands, Brands } = useGetAllBrands({});
+
+  const [ShowCategoryList, setShowCategoryList] = useState(false);
+  const [ShowBrandsList, setShowBrandsList] = useState(false);
+  const [ProfileList, setProfileList] = useState(false);
+
+  console.log('isLogin', isLogin);
+
+  const logOut = () => {
+    dispatch(SignOut());
+    localStorage.removeItem('UserData');
+    navigation('/');
+  };
+
+  const {
+    isLoadingCartData,
+    errorCartData,
+    isErrorCartData,
+    isSuccessCartData,
+    CartData,
+  } = useGetCart({
+    enabled: isLogin,
+  });
+
+  return (
+    <nav className="fixed left-3 right-3 top-5 z-30 rounded-2xl bg-white/90 shadow-2xl dark:bg-gray-900">
+      <div className="mx-auto flex max-w-screen-2xl flex-wrap items-center justify-between px-4 py-1">
+        {/* logo */}
+        <NavLink to={'/Home/'} className={'flex items-center gap-1'}>
+          <img src={Logo} className="h-10" alt="Flowbite Logo" />
+          <span className="self-center whitespace-nowrap text-lg font-semibold uppercase italic dark:text-white">
+            Pixels
+          </span>
+        </NavLink>
+
+        <div className="flex items-center gap-10 space-x-1 lg:order-2 lg:space-x-0 rtl:space-x-reverse">
+          {/* search */}
+          <input
+            type="text"
+            id="first_name"
+            onClick={() => {
+              navigation('/Home/Products');
+            }}
+            className="focus:border-color-[var(--Active-Gold-color)] placeholder:text- [12px] hidden w-[300px] rounded-md border-0 bg-gray-200 p-2 py-1 text-[12px] text-gray-900 focus:ring-[var(--Active-Gold-color)] md:flex"
+            placeholder="Search"
+          />
+
+          {/* when loged in  */}
+          {isLogin && (
+            <div className="flex items-center gap-2">
+              {/* cart */}
+              <div
+                className="relative mr-4 flex cursor-pointer items-center gap-1 font-semibold hover:text-[var(--Gold-color)]"
+                onClick={() => navigation('/Home/Cart')}
+              >
+                <BsHandbag />
+
+                {true && (
+                  <div className="absolute bottom-2 left-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-600 text-[12px] text-white">
+                    {CartData?.numOfCartItems}
+                  </div>
+                )}
+              </div>
+
+              {/* Profile */}
+              <div className="relative flex flex-col items-center space-x-3 md:space-x-0 rtl:space-x-reverse">
+                <button
+                  type="button"
+                  className="flex rounded-full bg-gray-800 text-sm focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 md:me-0"
+                  aria-expanded="false"
+                  data-dropdown-placement="bottom"
+                  onClick={() => setProfileList(!ProfileList)}
+                >
+                  <span className="sr-only">Open user menu</span>
+                  <img
+                    className="h-8 w-8 rounded-full object-contain"
+                    src="https://plus.unsplash.com/premium_photo-1664536392896-cd1743f9c02c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww"
+                    alt="user photo"
+                  />
+                </button>
+
+                {/* <!-- Dropdown menu --> */}
+                <div
+                  className={`"relative z-50 my-4 ${ProfileList ? 'absolute block' : 'hidden'} dark:bg-gray-700" right-2 top-9 list-none divide-y divide-gray-100 rounded-lg bg-white text-base shadow dark:divide-gray-600`}
+                >
+                  <div className="px-4 py-3">
+                    <span className="block text-sm text-gray-900 dark:text-white">
+                      {userData.name}
+                    </span>
+                    <span className="block truncate text-sm text-gray-500 dark:text-gray-400">
+                      {userData.email}
+                    </span>
+                  </div>
+
+                  <ul className="py-2" aria-labelledby="user-menu-button">
+                    {ProfileNaviagtor.map((item) => {
+                      return (
+                        <li key={item.name}>
+                          <NavLink
+                            to={item.path}
+                            className="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-[var(--Gold-color)] dark:hover:bg-gray-600"
+                          >
+                            {item.name}
+                          </NavLink>
+                        </li>
+                      );
+                    })}
+
+                    <li onClick={() => logOut()} className="cursor-pointer">
+                      <div className="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-[var(--Gold-color)] dark:hover:bg-gray-600">
+                        SignOut
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* when loged out  */}
+          {!isLogin && (
+            <button
+              className="flex cursor-pointer items-center gap-1 rounded-md bg-[var(--thired-Color)] px-4 py-1 text-sm font-bold text-white hover:opacity-80"
+              onClick={() => {
+                navigation('/');
+              }}
+            >
+              <GoPerson />
+              <p className="text-sm text-white">Login</p>
+            </button>
+          )}
+
+          {/* ÷btn for mboile size */}
+          <button
+            data-collapse-toggle="navbar-language"
+            type="button"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 lg:hidden"
+            aria-controls="navbar-language"
+            aria-expanded="true"
+          >
+            <span className="sr-only">Open main menu</span>
+            <svg
+              className="h-5 w-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 17 14"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M1 1h15M1 7h15M1 13h15"
+              />
+            </svg>
+          </button>
+        </div>
+
+        {/* links */}
+        <div
+          className="z-10 hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto"
+          id="navbar-language"
+        >
+          {/* category button drop down */}
+          <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 p-4 font-medium dark:border-gray-700 dark:bg-gray-800 lg:mt-0 lg:flex-row lg:space-x-8 lg:border-0 lg:p-0 lg:dark:bg-gray-900 rtl:space-x-reverse">
+            <li>
+              <button
+                className="flex w-full items-center justify-between rounded px-3 py-2 text-sm text-gray-900 hover:text-[var(--Gold-color)] dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:focus:text-white md:hover:text-[var(--Gold-color)] md:dark:hover:bg-transparent md:dark:hover:text-[var(--Gold-color)] lg:w-auto lg:border-0 lg:p-0 lg:hover:bg-transparent"
+                onClick={() => setShowCategoryList(!ShowCategoryList)}
+              >
+                Categories
+                <FaCaretDown />
+              </button>
+
+              {/* <!-- Categories Dropdown menu --> */}
+              <div
+                className={`cursor-pointer z-10 ${ShowCategoryList ? 'absolute block' : 'hidden'} w-44 divide-y divide-gray-100 rounded-lg bg-white font-normal shadow dark:divide-gray-600 dark:bg-gray-700`}
+              >
+                <ul
+                  className="py-2 text-sm text-gray-700 dark:text-gray-400"
+                  aria-labelledby="dropdownLargeButton"
+                >
+                  {isLoadingCategories ? (
+                    <li className="block px-4 py-2 hover:bg-gray-100 hover:text-[var(--Gold-color)] dark:hover:bg-gray-600">
+                      <h1>Loadin</h1>
+                    </li>
+                  ) : (
+                    Categories?.data.map((item: any) => {
+                      return (
+                        <li key={item.name} className='cursor-pointer'>
+                          <div
+                            onClick={() => {
+                              navigation(`/Home/products`, {
+                                state: { categoryId: item?._id },
+                              });
+                              setShowCategoryList(false);
+                            }}
+                            className="block px-4 py-2 hover:bg-gray-100 hover:text-[var(--Gold-color)] dark:hover:bg-gray-600"
+                          >
+                            {item?.name}
+                          </div>
+                        </li>
+                      );
+                    })
+                  )}
+                </ul>
+                <div className="py-1">
+                  <NavLink
+                    to={'/'}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[var(--Gold-color)] dark:hover:bg-gray-600"
+                  >
+                    See More
+                  </NavLink>
+                </div>
+              </div>
+            </li>
+
+            {/* <!-- Brands Dropdown menu --> */}
+
+            <li>
+              <button
+                className="cursor-pointer flex w-full items-center justify-between rounded px-3 py-2 text-sm text-gray-900 hover:text-[var(--Gold-color)] dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:focus:text-white md:hover:text-[var(--Gold-color)] md:dark:hover:bg-transparent md:dark:hover:text-[var(--Gold-color)] lg:w-auto lg:border-0 lg:p-0 lg:hover:bg-transparent"
+                onClick={() => setShowBrandsList(!ShowBrandsList)}
+              >
+                Brands
+                <FaCaretDown />
+              </button>
+
+              {/* <!-- Categories Dropdown menu --> */}
+              <div
+                className={`z-10 ${ShowBrandsList ? 'absolute block' : 'hidden'} w-44 divide-y divide-gray-100 rounded-lg bg-white font-normal shadow dark:divide-gray-600 dark:bg-gray-700`}
+              >
+                <ul
+                  className="py-2 text-sm text-gray-700 dark:text-gray-400"
+                  aria-labelledby="dropdownLargeButton"
+                >
+                  {isLoadingBrands ? (
+                    <li className="block px-4 py-2 hover:bg-gray-100 hover:text-[var(--Gold-color)] dark:hover:bg-gray-600">
+                      <h1>Loadin</h1>
+                    </li>
+                  ) : (
+                    <div className="max-h-[300px] overflow-y-auto">
+                      {Brands?.data.map((item: any) => {
+                        return (
+                          <li key={item.name} className='cursor-pointer'>
+                            <div
+                              onClick={() => {
+                                navigation(`/Home/products`, {
+                                  state: { BrandId: item?._id },
+                                });
+                                setShowBrandsList(false);
+                              }}
+                              className="block px-4 py-2 hover:bg-gray-100 hover:text-[var(--Gold-color)] dark:hover:bg-gray-600"
+                            >
+                              {item?.name}
+                            </div>
+                          </li>
+                        );
+                      })}
+                    </div>
+                  )}
+                </ul>
+              </div>
+            </li>
+
+            {/* main navigaors */}
+            {Navigators.map((item) => {
+              return (
+                <li key={item.name}>
+                  <NavLink
+                    to={item.path}
+                    className="block rounded px-3 py-2 text-sm text-black lg:bg-transparent lg:p-0 lg:hover:text-[var(--Gold-color)] lg:dark:text-blue-500"
+                    aria-current="page"
+                  >
+                    {item.name}
+                  </NavLink>
+                </li>
+              );
+            })}
+
+            {/* search btn */}
+            <li>
+              <NavLink
+                to={'/Home/Products'}
+                className="block rounded px-3 py-2 text-sm text-black md:dark:text-blue-500 lg:hidden lg:bg-transparent lg:p-0 lg:hover:text-[var(--Gold-color)]"
+                aria-current="page"
+              >
+                Search
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+export { NavBar };
+
+{
+  /* ÷language btn */
+}
+{
+  /* <div className="relative flex min-w-44 flex-col">
+<button
+  type="button"
+  data-dropdown-toggle="language-dropdown-menu"
+  className="inline-flex cursor-pointer items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+>
+  {SelectedCoutry.icons}
+  {SelectedCoutry.name}
+</button>
+
+<div
+  className="fixed right-0 top-5 z-50 my-4 hidden min-w-max list-none divide-y divide-gray-100 rounded-lg bg-white text-base shadow dark:bg-gray-700"
+  id="language-dropdown-menu"
+>
+  <ul className="py-2 font-medium" role="none">
+    {Countries.map((item) => {
+      return (
+        <li onClick={() => setSelectedCoutry(item)}>
+          <a
+            href="#"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
+            role="menuitem"
+          >
+            <div className="inline-flex items-center">
+              {item.icons}
+              {item.name}
+            </div>
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</div>
+</div> */
+}
 
 // const Countries = [
 //   {
@@ -165,264 +502,3 @@ const ProfileNaviagtor = [
 //     ),
 //   },
 // ];
-
-function NavBar() {
-  const { isLoadingCategories, Categories } = useGetAllCategories({});
-  const navigation = useNavigate();
-
-  return (
-    <nav className="fixed left-3 right-3 top-5 z-30 rounded-2xl bg-white/90 shadow-2xl dark:bg-gray-900">
-      <div className="mx-auto flex max-w-screen-2xl flex-wrap items-center justify-between px-4 py-1">
-        {/* logo */}
-        <NavLink to={'/'} className={'flex items-center gap-1'}>
-          <img src={Logo} className="h-10" alt="Flowbite Logo" />
-          <span className="self-center whitespace-nowrap text-lg font-semibold uppercase italic dark:text-white">
-            Pixels
-          </span>
-        </NavLink>
-
-        <div className="flex items-center gap-10 space-x-1 lg:order-2 lg:space-x-0 rtl:space-x-reverse">
-          {/* search */}
-          <input
-            type="text"
-            id="first_name"
-            onClick={() => {
-              alert('open search screen ');
-            }}
-            className="focus:border-color-[var(--Active-Gold-color)] placeholder:text- [12px] hidden w-[300px] rounded-md border-0 bg-gray-200 p-2 py-1 text-[12px] text-gray-900 focus:ring-[var(--Active-Gold-color)] md:flex"
-            placeholder="Search"
-          />
-
-          {/* when loged in  */}
-          {false && (
-            <div className="flex items-center gap-2">
-              <div className="relative mr-4 flex cursor-pointer items-center gap-1 font-semibold hover:text-[var(--Gold-color)]">
-                <BsHandbag />
-
-                {true && (
-                  <div className="absolute bottom-2 left-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-600 text-[7px] text-white">
-                    1
-                  </div>
-                )}
-              </div>
-
-              {/* Profile */}
-              <div className="flex items-center space-x-3 md:space-x-0 rtl:space-x-reverse">
-                <button
-                  type="button"
-                  className="flex rounded-full bg-gray-800 text-sm focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 md:me-0"
-                  id="user-menu-button"
-                  aria-expanded="false"
-                  data-dropdown-toggle="user-dropdown"
-                  data-dropdown-placement="bottom"
-                >
-                  <span className="sr-only">Open user menu</span>
-                  <img
-                    className="h-8 w-8 rounded-full"
-                    src="/docs/images/people/profile-picture-3.jpg"
-                    alt="user photo"
-                  />
-                </button>
-
-                {/* <!-- Dropdown menu --> */}
-                <div
-                  className="relative z-50 my-4 hidden list-none divide-y divide-gray-100 rounded-lg bg-white text-base shadow dark:divide-gray-600 dark:bg-gray-700"
-                  id="user-dropdown"
-                >
-                  <div className="px-4 py-3">
-                    <span className="block text-sm text-gray-900 dark:text-white">
-                      Bonnie Green
-                    </span>
-                    <span className="block truncate text-sm text-gray-500 dark:text-gray-400">
-                      name@flowbite.com
-                    </span>
-                  </div>
-
-                  <ul className="py-2" aria-labelledby="user-menu-button">
-                    {ProfileNaviagtor.map((item) => {
-                      return (
-                        <li key={item.name}>
-                          <NavLink
-                            to={item.path}
-                            className="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-[var(--Gold-color)] dark:hover:bg-gray-600"
-                          >
-                            {item.name}
-                          </NavLink>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* when loged out  */}
-          {true && (
-            <button
-              className="flex cursor-pointer items-center gap-1 rounded-md bg-[var(--thired-Color)] px-4 py-1 text-sm font-bold text-white hover:opacity-80"
-              onClick={() => {
-                navigation('/');
-              }}
-            >
-              <GoPerson />
-              <p className="text-sm text-white">Login</p>
-            </button>
-          )}
-
-          {/* ÷btn for mboile size */}
-          <button
-            data-collapse-toggle="navbar-language"
-            type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 lg:hidden"
-            aria-controls="navbar-language"
-            aria-expanded="true"
-          >
-            <span className="sr-only">Open main menu</span>
-            <svg
-              className="h-5 w-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
-          </button>
-        </div>
-
-        {/* links */}
-        <div
-          className="z-10 hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto"
-          id="navbar-language"
-        >
-          <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 p-4 font-medium dark:border-gray-700 dark:bg-gray-800 lg:mt-0 lg:flex-row lg:space-x-8 lg:border-0 lg:p-0 lg:dark:bg-gray-900 rtl:space-x-reverse">
-            {/* button drop down */}
-            <li>
-              <button
-                id="dropdownNavbarLink"
-                data-dropdown-toggle="dropdownNavbar"
-                className="flex w-full items-center justify-between rounded px-3 py-2 text-sm text-gray-900 hover:text-[var(--Gold-color)] dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:focus:text-white md:hover:text-[var(--Gold-color)] md:dark:hover:bg-transparent md:dark:hover:text-[var(--Gold-color)] lg:w-auto lg:border-0 lg:p-0 lg:hover:bg-transparent"
-              >
-                Categories
-                <FaCaretDown />
-              </button>
-
-              {/* <!-- Categories Dropdown menu --> */}
-              <div
-                id="dropdownNavbar"
-                className="z-10 hidden w-44 divide-y divide-gray-100 rounded-lg bg-white font-normal shadow dark:divide-gray-600 dark:bg-gray-700"
-              >
-                <ul
-                  className="py-2 text-sm text-gray-700 dark:text-gray-400"
-                  aria-labelledby="dropdownLargeButton"
-                >
-                  {isLoadingCategories ? (
-                    <li className="block px-4 py-2 hover:bg-gray-100 hover:text-[var(--Gold-color)] dark:hover:bg-gray-600">
-                      <h1>Loadin</h1>
-                    </li>
-                  ) : (
-                    Categories?.data.map((item: any) => {
-                      return (
-                        <li key={item.name}>
-                          <NavLink
-                            to={'/'}
-                            className="block px-4 py-2 hover:bg-gray-100 hover:text-[var(--Gold-color)] dark:hover:bg-gray-600"
-                          >
-                            {item?.name}
-                          </NavLink>
-                        </li>
-                      );
-                    })
-                  )}
-                </ul>
-                <div className="py-1">
-                  <NavLink
-                    to={'/'}
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[var(--Gold-color)] dark:hover:bg-gray-600"
-                  >
-                    See More
-                  </NavLink>
-                </div>
-              </div>
-            </li>
-
-            {/* main navigaors */}
-            {Navigators.map((item) => {
-              return (
-                <li key={item.name}>
-                  <NavLink
-                    to={item.path}
-                    className="block rounded px-3 py-2 text-sm text-black lg:bg-transparent lg:p-0 lg:hover:text-[var(--Gold-color)] lg:dark:text-blue-500"
-                    aria-current="page"
-                  >
-                    {item.name}
-                  </NavLink>
-                </li>
-              );
-            })}
-
-            {/* search btn */}
-            <li>
-              <NavLink
-                to={'/'}
-                className="block rounded px-3 py-2 text-sm text-black md:dark:text-blue-500 lg:hidden lg:bg-transparent lg:p-0 lg:hover:text-[var(--Gold-color)]"
-                aria-current="page"
-              >
-                Search
-              </NavLink>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  );
-}
-
-export { NavBar };
-
-{
-  /* ÷language btn */
-}
-{
-  /* <div className="relative flex min-w-44 flex-col">
-<button
-  type="button"
-  data-dropdown-toggle="language-dropdown-menu"
-  className="inline-flex cursor-pointer items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
->
-  {SelectedCoutry.icons}
-  {SelectedCoutry.name}
-</button>
-
-<div
-  className="fixed right-0 top-5 z-50 my-4 hidden min-w-max list-none divide-y divide-gray-100 rounded-lg bg-white text-base shadow dark:bg-gray-700"
-  id="language-dropdown-menu"
->
-  <ul className="py-2 font-medium" role="none">
-    {Countries.map((item) => {
-      return (
-        <li onClick={() => setSelectedCoutry(item)}>
-          <a
-            href="#"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
-            role="menuitem"
-          >
-            <div className="inline-flex items-center">
-              {item.icons}
-              {item.name}
-            </div>
-          </a>
-        </li>
-      );
-    })}
-  </ul>
-</div>
-</div> */
-}
