@@ -16,10 +16,10 @@ function ProductSection({ Product }: any) {
     setActiveImg(Product?.images[0]);
   }, [Product]);
 
-  const { AddToCart, isLoading, error, isError, isSuccess, data } =
+  const { AddToCart, isLoading } =
     useAddToCart({
-      onErrorHandler: (error) => {},
-      onSuccessHandler: (data) => {
+      onErrorHandler: () => {},
+      onSuccessHandler: () => {
         if (Counter > 1) {
           UpdateProductCartCount({
             productId: Product?.id,
@@ -37,7 +37,7 @@ function ProductSection({ Product }: any) {
     });
 
   const { UpdateProductCartCount, isLoadingUpdateCart } = useUpdateCartCount({
-    onErrorHandler: (error) => {},
+    onErrorHandler: () => {},
     onSuccessHandler: (data) => {
       console.log('upadtcounter', data);
       if (ToCart) {

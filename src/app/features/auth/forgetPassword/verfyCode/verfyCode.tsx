@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 import Cover from '../../../../../assets/png/coverIntro.jpg';
 import {
   CustomeInput,
-  ErrorToasts,
   NavBar,
 } from '../../../../shared/components';
 import { useState } from 'react';

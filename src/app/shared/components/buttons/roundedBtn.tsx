@@ -1,6 +1,4 @@
-import React from 'react';
-
-function RoundedBtn({ disabled, className, isLoading , label , onClick }: any) {
+function RoundedBtn({ disabled, className, isLoading, label, onClick }: any) {
   return (
     <div>
       <button
@@ -32,7 +30,7 @@ function RoundedBtn({ disabled, className, isLoading , label , onClick }: any) {
             Loading...
           </div>
         ) : (
-         `${label}`
+          `${label}`
         )}
       </button>
     </div>

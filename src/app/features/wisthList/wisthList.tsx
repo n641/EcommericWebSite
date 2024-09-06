@@ -1,8 +1,7 @@
-import React from 'react';
 import { BreadCramp, ProductItem } from '../../shared/components';
+import EmptyProduct from '../products/components/emptyProduct';
 import SkeletonProducts from '../products/components/skeletonProducts';
 import { useGetWishList } from './hooks/useGetWishlist';
-import EmptyProduct from '../products/components/emptyProduct';
 
 function WisthList() {
   const { isLoadingProducts, Products, refetchProducts } = useGetWishList({
@@ -22,7 +21,7 @@ function WisthList() {
         <input
           type="text"
           id="first_name"
-          onInput={(e: any) => {
+          onInput={() => {
             // setSearch(e.target.value);
           }}
           className="mt-4 w-full rounded-md border-0 bg-gray-200 p-2 py-1 text-[12px] text-gray-900 focus:border-[var(--main-Color)] focus:ring-[var(--main-Color)]"

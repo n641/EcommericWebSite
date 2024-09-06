@@ -1,9 +1,8 @@
 import axios, { AxiosError } from 'axios';
-import { useSelector } from 'react-redux';
 
 const getAccessToken = () => {
   try {
-    return JSON.parse(localStorage.getItem('UserData') as any)?.token ;
+    return JSON.parse(localStorage.getItem('UserData') as any)?.token;
   } catch (error) {
     // Error retrieving data
     console.log(error, 'logged in client error');
@@ -18,7 +17,6 @@ const apiClient = axios.create({
 
 export const apiService = (props: any) => {
   const { needsAuth = false, contentType = false } = props;
-
 
   if (needsAuth === true) {
     apiClient.defaults.headers.common['token'] = getAccessToken();

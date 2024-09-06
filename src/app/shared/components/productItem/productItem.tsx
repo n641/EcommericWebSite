@@ -4,8 +4,6 @@ import { FaHeart, FaShippingFast } from 'react-icons/fa';
 import { FaStar } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 import { useAddToCart } from '../../../../auth/addToCart/useAddToCart';
-import { SuccessToast } from '../toasts/successToast';
-import { RoundedBtn } from '../buttons/roundedBtn';
 import { useAddProductToWishList } from '../../../../auth/addPorductToWithList/usePostPorductToWithList';
 import { useRemoveProductToWishList } from '../../../../auth/removePorductToWithList/useRemovePorductToWithList';
 import { Spinner } from '../spinner/spinner';
@@ -13,17 +11,17 @@ import { Spinner } from '../spinner/spinner';
 function ProductItem({ item , isLover = false , refetchProducts}: any) {
   const [saveItem, setsaveItem] = useState(isLover);
   const navigate = useNavigate();
-  const { AddToCart, isLoading, error, isError, isSuccess, data } =
+  const { AddToCart, isLoading } =
     useAddToCart({
-      onErrorHandler: (error) => {},
-      onSuccessHandler: (data) => {
+      onErrorHandler: () => {},
+      onSuccessHandler: () => {
         // navigate('/Home/Cart');
       },
     });
 
   const { PostProductToWishList, isLoadingPostProductToWishList } =
     useAddProductToWishList({
-      onErrorHandler: (error) => {},
+      onErrorHandler: () => {},
       onSuccessHandler: (data) => {
         setsaveItem(!saveItem);
         console.log(data);
@@ -36,7 +34,7 @@ function ProductItem({ item , isLover = false , refetchProducts}: any) {
 
   const { RemoveProductToWishList, isLoadingRemoveProductToWishList } =
     useRemoveProductToWishList({
-      onErrorHandler: (error) => {},
+      onErrorHandler: () => {},
       onSuccessHandler: (data) => {
         setsaveItem(!saveItem);
         console.log(data);

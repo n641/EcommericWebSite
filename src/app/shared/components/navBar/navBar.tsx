@@ -1,15 +1,15 @@
+import { useState } from 'react';
 import { BsHandbag } from 'react-icons/bs';
 import { FaCaretDown } from 'react-icons/fa';
 import { GoPerson } from 'react-icons/go';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Logo from '../../../../assets/logos/LightLogo.png';
-import { useGetAllCategories } from '../../../features/home/hooks/useGetAllCategory';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { useState } from 'react';
-import { useGetAllBrands } from '../../../features/home/hooks/useGetAllBrands';
-import { SignOut } from '../../redux/userSlice';
 import { useGetCart } from '../../../../auth/getCartData/useGetCart';
+import { useGetAllBrands } from '../../../features/home/hooks/useGetAllBrands';
+import { useGetAllCategories } from '../../../features/home/hooks/useGetAllCategory';
+import { RootState } from '../../redux/store';
+import { SignOut } from '../../redux/userSlice';
 
 const Navigators = [
   {
@@ -54,13 +54,7 @@ function NavBar() {
     navigation('/');
   };
 
-  const {
-    isLoadingCartData,
-    errorCartData,
-    isErrorCartData,
-    isSuccessCartData,
-    CartData,
-  } = useGetCart({
+  const { CartData } = useGetCart({
     enabled: isLogin,
   });
 
@@ -217,7 +211,7 @@ function NavBar() {
 
               {/* <!-- Categories Dropdown menu --> */}
               <div
-                className={`cursor-pointer z-10 ${ShowCategoryList ? 'absolute block' : 'hidden'} w-44 divide-y divide-gray-100 rounded-lg bg-white font-normal shadow dark:divide-gray-600 dark:bg-gray-700`}
+                className={`z-10 cursor-pointer ${ShowCategoryList ? 'absolute block' : 'hidden'} w-44 divide-y divide-gray-100 rounded-lg bg-white font-normal shadow dark:divide-gray-600 dark:bg-gray-700`}
               >
                 <ul
                   className="py-2 text-sm text-gray-700 dark:text-gray-400"
@@ -230,7 +224,7 @@ function NavBar() {
                   ) : (
                     Categories?.data.map((item: any) => {
                       return (
-                        <li key={item.name} className='cursor-pointer'>
+                        <li key={item.name} className="cursor-pointer">
                           <div
                             onClick={() => {
                               navigation(`/Home/products`, {
@@ -262,7 +256,7 @@ function NavBar() {
 
             <li>
               <button
-                className="cursor-pointer flex w-full items-center justify-between rounded px-3 py-2 text-sm text-gray-900 hover:text-[var(--Gold-color)] dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:focus:text-white md:hover:text-[var(--Gold-color)] md:dark:hover:bg-transparent md:dark:hover:text-[var(--Gold-color)] lg:w-auto lg:border-0 lg:p-0 lg:hover:bg-transparent"
+                className="flex w-full cursor-pointer items-center justify-between rounded px-3 py-2 text-sm text-gray-900 hover:text-[var(--Gold-color)] dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:focus:text-white md:hover:text-[var(--Gold-color)] md:dark:hover:bg-transparent md:dark:hover:text-[var(--Gold-color)] lg:w-auto lg:border-0 lg:p-0 lg:hover:bg-transparent"
                 onClick={() => setShowBrandsList(!ShowBrandsList)}
               >
                 Brands
@@ -285,7 +279,7 @@ function NavBar() {
                     <div className="max-h-[300px] overflow-y-auto">
                       {Brands?.data.map((item: any) => {
                         return (
-                          <li key={item.name} className='cursor-pointer'>
+                          <li key={item.name} className="cursor-pointer">
                             <div
                               onClick={() => {
                                 navigation(`/Home/products`, {

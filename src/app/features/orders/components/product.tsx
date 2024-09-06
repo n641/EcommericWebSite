@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import ProductItem from '../../payment/paymentLayout/components/productItem/productItem';
-import { FaShippingFast } from "react-icons/fa";
 
 function Product({ item }: any) {
   const [ShowMore, setShowMore] = useState(false);

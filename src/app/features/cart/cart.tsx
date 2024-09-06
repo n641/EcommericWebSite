@@ -5,7 +5,6 @@ import { ScrollToTop } from '../../shared/components';
 import { useGetCart } from '../../../auth/getCartData/useGetCart';
 import { useEffect, useState } from 'react';
 import { useUpdateCartCount } from '../../../auth/updateCartCounter/useUpdateCartCount';
-import { MdDelete } from 'react-icons/md';
 import { useclearCart } from '../../../auth/clearCart/useClearCart';
 import EmptyCart from './components/emptyCart';
 import Skeleton from './components/skeleton';
@@ -15,9 +14,6 @@ function Cart() {
 
   const {
     isLoadingCartData,
-    errorCartData,
-    isErrorCartData,
-    isSuccessCartData,
     CartData,
   } = useGetCart({});
 
@@ -28,7 +24,7 @@ function Cart() {
   }, [CartData]);
 
   const { UpdateProductCartCount, isLoadingUpdateCart } = useUpdateCartCount({
-    onErrorHandler: (error) => {},
+    onErrorHandler: () => {},
     onSuccessHandler: (data) => {
       setProducts(data?.data);
       Navigate('/Home/Cart');
@@ -36,13 +32,13 @@ function Cart() {
   });
 
   const { clearProductsCart, isLoadingClearCart } = useclearCart({
-    onErrorHandler: (error) => {},
-    onSuccessHandler: (data) => {
+    onErrorHandler: () => {},
+    onSuccessHandler: () => {
       setProducts([]);
     },
   });
-  const isLoading =
-    isLoadingCartData || isLoadingUpdateCart || isLoadingClearCart;
+  // const isLoading =
+  //   isLoadingCartData || isLoadingUpdateCart || isLoadingClearCart;
 
   return (
     <div className="mx-5 items-start gap-5 xl:grid xl:grid-cols-5">

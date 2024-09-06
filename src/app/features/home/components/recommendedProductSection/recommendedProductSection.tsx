@@ -46,10 +46,10 @@ const CategoryItem = ({ product }: any) => {
 };
 function RecommendedProductSection({ Products }: any) {
   const navigation = useNavigate();
-  const { AddToCart, isLoading, error, isError, isSuccess, data } =
+  const { AddToCart, isLoading } =
     useAddToCart({
-      onErrorHandler: (error) => {},
-      onSuccessHandler: (data) => {
+      onErrorHandler: () => {},
+      onSuccessHandler: () => {
         // navigate('/Home/Cart');
       },
     });

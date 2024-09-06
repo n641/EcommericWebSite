@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { json, Link, useNavigate } from 'react-router-dom';
+import {  Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { CustomeInput, ErrorToasts, NavBar } from '../../../shared/components';
 import Cover from '../../../../assets/png/coverIntro.jpg';
@@ -7,7 +7,6 @@ import { useLogin } from './hooks/useLogin';
 import { RoundedBtn } from '../../../shared/components/buttons/roundedBtn';
 import { useDispatch } from 'react-redux';
 import { addUserData } from '../../../shared/redux/userSlice';
-import { useState } from 'react';
 let userSchema = Yup.object({
   email: Yup.string()
     .email('Invalid email format')
@@ -21,7 +20,6 @@ let userSchema = Yup.object({
 });
 function SignUp() {
   const navigate = useNavigate();
-  const [RemeberMe, setRemeberMe] = useState(false);
 
   const dispatch = useDispatch();
 

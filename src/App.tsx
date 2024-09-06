@@ -1,16 +1,12 @@
-import './App.css';
 import 'flowbite';
 import 'flowbite/dist/flowbite.min.css';
 import { StrictMode, useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { Provider, useDispatch } from 'react-redux';
-import {
-  createBrowserRouter,
-  Router,
-  RouterProvider,
-  useNavigate,
-} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import './App.css';
+import Login from './app/features/auth/login/login.tsx';
+import SignUp from './app/features/auth/signup/signUp.tsx';
 import {
   Cart,
   Home,
@@ -23,19 +19,15 @@ import {
   SuccessPayment,
   VerfyCode,
 } from './app/features/index.ts';
-import Layout from './app/shared/layout/layout.tsx';
-import { store } from './app/shared/redux/store.ts';
-import './index.css';
 import PaymentLayout from './app/features/payment/paymentLayout/paymentLayout.tsx';
-import Login from './app/features/auth/login/login.tsx';
-import SignUp from './app/features/auth/signup/signUp.tsx';
-import { addUserData } from './app/shared/redux/userSlice.tsx';
-import { ScrollToTop } from './app/shared/components/index.ts';
 import { WisthList } from './app/features/wisthList/wisthList.tsx';
+import Layout from './app/shared/layout/layout.tsx';
+import { addUserData } from './app/shared/redux/userSlice.tsx';
+import './index.css';
 
 const router = createBrowserRouter([
   {
-    index: true,
+    path: '/',
     element: <Login />,
   },
   {
@@ -95,14 +87,18 @@ const router = createBrowserRouter([
           {
             path: 'SuccessPayment',
             element: <SuccessPayment />,
-          }, 
+          },
         ],
       },
       {
         path: '*',
-        element: <NotFound/>,
-      }
+        element: <NotFound />,
+      },
     ],
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ]);
 
@@ -113,22 +109,20 @@ function App() {
 
   useEffect(() => {
     console.log(localStorage.getItem('UserData'));
-    if (localStorage.getItem('UserData') !== null) {  
+    if (localStorage.getItem('UserData') !== null) {
       const userData = JSON.parse(localStorage.getItem('UserData') || '{}');
       dispatch(addUserData(userData));
       console.log(userData);
       // window.location.href = '/Home';
-    }else{
+    } else {
       console.warn('no user data');
     }
   }, []);
 
- 
-
   return (
     <StrictMode>
       <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
+        <RouterProvider router={router} />
       </QueryClientProvider>
     </StrictMode>
   );

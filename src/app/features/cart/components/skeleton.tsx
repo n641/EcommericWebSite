@@ -1,10 +1,10 @@
-import React from 'react';
 
 function Skeleton() {
   return Array(5)
     .fill(0)
     .map((_, index) => (
       <tr
+        key={index}
         role="status"
         className="my-3 flex animate-pulse items-center justify-center space-y-8 md:space-x-8 md:space-y-0 rtl:space-x-reverse"
       >

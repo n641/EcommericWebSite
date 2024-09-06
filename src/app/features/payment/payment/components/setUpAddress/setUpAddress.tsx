@@ -38,7 +38,7 @@ function SetUpAddress({ setChoosenAddress, ChoosenAddress }: any) {
     onErrorHandler: (error: any) => {
       console.log(error);
     },
-    onSuccessHandler: (data: any) => {
+    onSuccessHandler: () => {
     },
   });
 

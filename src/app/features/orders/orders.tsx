@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { BreadCramp } from '../../shared/components';
-import SkeletonProducts from '../products/components/skeletonProducts';
-import { useGetOrders } from './hooks/useGetOrders';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../shared/redux/store';
 import { jwtDecode } from 'jwt-decode';
-import ProductItem from '../payment/paymentLayout/components/productItem/productItem';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { BreadCramp } from '../../shared/components';
+import { RootState } from '../../shared/redux/store';
+import SkeletonProducts from '../products/components/skeletonProducts';
 import Product from './components/product';
+import { useGetOrders } from './hooks/useGetOrders';
 
 function Orders() {
   const [UserId, setUserId]: any = useState(null);
@@ -21,7 +20,7 @@ function Orders() {
 
   console.log(UserId);
 
-  const { isLoadingProducts, Products, refetchProducts } = useGetOrders({
+  const { isLoadingProducts, Products } = useGetOrders({
     userId: UserId,
     enabled: UserId != null ? true : false,
     onErrorHandler: (error) => {
@@ -39,10 +38,10 @@ function Orders() {
       <BreadCramp />
 
       <div className="w-full">
-            {isLoadingProducts ? (
+        {isLoadingProducts ? (
           <SkeletonProducts />
         ) : (
-          <div className="flex flex-col mt-4">
+          <div className="mt-4 flex flex-col">
             {Products?.map((item: any, index: number) => {
               return <Product key={index} item={item} />;
             })}

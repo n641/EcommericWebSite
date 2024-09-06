@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { IoCheckmarkCircle, IoCheckmarkCircleOutline } from 'react-icons/io5';
 function SetUpPayment({ChoosePaymentOption , setChoosePaymentOption}:any) {
 

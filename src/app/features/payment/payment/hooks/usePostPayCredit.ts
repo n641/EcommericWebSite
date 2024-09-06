@@ -1,5 +1,4 @@
 import { useMutation } from 'react-query';
-import { CashPayment } from '../services/cashPayment';
 import { creditPay } from '../services/creditPay';
 
 export const usePostPayCreadit = ({

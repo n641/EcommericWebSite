@@ -19,10 +19,10 @@ function PaymentLayout() {
   const [ChoosePaymentOption, setChoosePaymentOption] = useState(1);
 
   const { cartInfo } = location.state || {};
-  const { PayCash, isLoading, error, isError, isSuccess, data } =
+  const { PayCash, isLoading } =
     usePostCashPayment({
-      onErrorHandler: (error) => {},
-      onSuccessHandler: (data) => {
+      onErrorHandler: () => {},
+      onSuccessHandler: () => {
         navigation('/Home');
       },
     });
@@ -30,12 +30,8 @@ function PaymentLayout() {
   const {
     PayCredit,
     isLoadingPayCredit,
-    isErrorPayCredit,
-    errorPayCredit,
-    dataPayCredit,
-    isSuccessPayCredit,
   } = usePostPayCreadit({
-    onErrorHandler: (error) => {},
+    onErrorHandler: () => {},
     onSuccessHandler: (data) => {
       window.location.href = data?.session?.url;
       // console.warn("data" , data);
