@@ -30,7 +30,7 @@ function SignUp() {
     onSuccessHandler: async (data: any) => {
       localStorage.setItem('UserData', JSON.stringify(data));
       dispatch(addUserData(data));
-      navigate('/Home');
+      navigate('/EcommericWebSite');
     },
   });
 

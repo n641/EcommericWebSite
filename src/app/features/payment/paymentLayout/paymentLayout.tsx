@@ -69,7 +69,7 @@ function PaymentLayout() {
               className="cursor-pointer"
               onClick={() => {
                 if (Progress === 2) {
-                  navigation('/Home/cart');
+                  navigation('/EcommericWebSite/cart');
                 } else if (Progress > 1) {
                   setProgress(Progress - 1);
                 }

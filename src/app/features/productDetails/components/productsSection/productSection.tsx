@@ -27,9 +27,9 @@ function ProductSection({ Product }: any) {
           });
         } else {
           if (ToCart) {
-            navigate('/Home/Cart');
+            navigate('/EcommericWebSite/Cart');
           }else{
-            navigate('/Home');
+            navigate('/EcommericWebSite/Cart');
 
           }
         }
@@ -41,9 +41,9 @@ function ProductSection({ Product }: any) {
     onSuccessHandler: (data) => {
       console.log('upadtcounter', data);
       if (ToCart) {
-        navigate('/Home/Cart');
+        navigate('/EcommericWebSite/Cart');
       }else{
-        navigate('/Home');
+        navigate('/EcommericWebSite/Cart');
       }
     },
   });

@@ -12,7 +12,7 @@ function AllBrandsSection({ Brands }: any) {
             key={index}
             className="cursor-pointer rounded-xl border bg-white p-1 transition-all hover:scale-110 hover:border-[var(--main-Color)]"
             onClick={() =>
-              navigation(`/Home/products`, { state: { BrandId: item?._id } })
+              navigation(`/EcommericWebSite/products`, { state: { BrandId: item?._id } })
             }
           >
             <img

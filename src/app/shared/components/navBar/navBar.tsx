@@ -14,22 +14,22 @@ import { SignOut } from '../../redux/userSlice';
 const Navigators = [
   {
     name: 'Home',
-    path: '/Home/',
+    path: '/EcommericWebSite/',
   },
   {
     name: 'Products',
-    path: '/Home/products',
+    path: '/EcommericWebSite/products',
   },
   {
     name: 'WishList',
-    path: '/Home/WishList',
+    path: '/EcommericWebSite/WishList',
   },
 ];
 
 const ProfileNaviagtor = [
   {
     name: 'Orders',
-    path: '/Home/allorders',
+    path: '/EcommericWebSite/allorders',
   },
 ];
 
@@ -62,7 +62,7 @@ function NavBar() {
     <nav className="fixed left-3 right-3 top-5 z-30 rounded-2xl bg-white/90 shadow-2xl dark:bg-gray-900">
       <div className="mx-auto flex max-w-screen-2xl flex-wrap items-center justify-between px-4 py-1">
         {/* logo */}
-        <NavLink to={'/Home/'} className={'flex items-center gap-1'}>
+        <NavLink to={'/EcommericWebSite/'} className={'flex items-center gap-1'}>
           <img src={Logo} className="h-10" alt="Flowbite Logo" />
           <span className="self-center whitespace-nowrap text-lg font-semibold uppercase italic dark:text-white">
             Pixels
@@ -75,7 +75,7 @@ function NavBar() {
             type="text"
             id="first_name"
             onClick={() => {
-              navigation('/Home/Products');
+              navigation('/EcommericWebSite/Products');
             }}
             className="focus:border-color-[var(--Active-Gold-color)] placeholder:text- [12px] hidden w-[300px] rounded-md border-0 bg-gray-200 p-2 py-1 text-[12px] text-gray-900 focus:ring-[var(--Active-Gold-color)] md:flex"
             placeholder="Search"
@@ -87,7 +87,7 @@ function NavBar() {
               {/* cart */}
               <div
                 className="relative mr-4 flex cursor-pointer items-center gap-1 font-semibold hover:text-[var(--Gold-color)]"
-                onClick={() => navigation('/Home/Cart')}
+                onClick={() => navigation('/EcommericWebSite/Cart')}
               >
                 <BsHandbag />
 
@@ -227,7 +227,7 @@ function NavBar() {
                         <li key={item.name} className="cursor-pointer">
                           <div
                             onClick={() => {
-                              navigation(`/Home/products`, {
+                              navigation(`/EcommericWebSite/products`, {
                                 state: { categoryId: item?._id },
                               });
                               setShowCategoryList(false);
@@ -282,7 +282,7 @@ function NavBar() {
                           <li key={item.name} className="cursor-pointer">
                             <div
                               onClick={() => {
-                                navigation(`/Home/products`, {
+                                navigation(`/EcommericWebSite/products`, {
                                   state: { BrandId: item?._id },
                                 });
                                 setShowBrandsList(false);
@@ -318,7 +318,7 @@ function NavBar() {
             {/* search btn */}
             <li>
               <NavLink
-                to={'/Home/Products'}
+                to={'/EcommericWebSite/Products'}
                 className="block rounded px-3 py-2 text-sm text-black md:dark:text-blue-500 lg:hidden lg:bg-transparent lg:p-0 lg:hover:text-[var(--Gold-color)]"
                 aria-current="page"
               >

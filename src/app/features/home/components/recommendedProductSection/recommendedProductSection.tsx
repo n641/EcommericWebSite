@@ -33,7 +33,7 @@ const CategoryItem = ({ product }: any) => {
 
         <button className="rounded-md border-2 border-black p-2 text-[8px] font-medium text-black xl:text-[70%] hover:bg-[var(--main-Color)] hover:text-white hover:border-[var(--main-Color)]"
         onClick={() =>
-          navigation('/Home/productDetails', {
+          navigation('/EcommericWebSite/productDetails', {
             state: { Product: product },
           })
         }
@@ -50,7 +50,7 @@ function RecommendedProductSection({ Products }: any) {
     useAddToCart({
       onErrorHandler: () => {},
       onSuccessHandler: () => {
-        // navigate('/Home/Cart');
+        // navigate('/EcommericWebSite/Cart');
       },
     });
 
@@ -117,7 +117,7 @@ function RecommendedProductSection({ Products }: any) {
               <button
                 className="w-[45%] truncate whitespace-nowrap rounded-lg border-2 border-black p-3 text-sm font-semibold text-black hover:border-[var(--main-Color)] hover:bg-[var(--main-Color)] hover:text-white"
                 onClick={() =>
-                  navigation('/Home/productDetails', {
+                  navigation('/EcommericWebSite/productDetails', {
                     state: { Product: Products?.[0] },
                   })
                 }

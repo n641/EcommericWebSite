@@ -15,7 +15,7 @@ function ProductItem({ item , isLover = false , refetchProducts}: any) {
     useAddToCart({
       onErrorHandler: () => {},
       onSuccessHandler: () => {
-        // navigate('/Home/Cart');
+        // navigate('/EcommericWebSite/Cart');
       },
     });
 
@@ -131,7 +131,7 @@ function ProductItem({ item , isLover = false , refetchProducts}: any) {
             <button
               className="w-full truncate whitespace-nowrap rounded-md border border-black p-1.5 text-sm font-semibold text-black transition-all duration-300 hover:bg-gray-400 group-hover:w-[30%]"
               onClick={() =>
-                navigate('/Home/productDetails', {
+                navigate('/EcommericWebSite/productDetails', {
                   state: { Product: item },
                 })
               }

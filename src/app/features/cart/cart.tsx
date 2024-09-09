@@ -27,7 +27,7 @@ function Cart() {
     onErrorHandler: () => {},
     onSuccessHandler: (data) => {
       setProducts(data?.data);
-      Navigate('/Home/Cart');
+      Navigate('/EcommericWebSite/Cart');
     },
   });
 
@@ -140,7 +140,7 @@ function Cart() {
           <button
             className="mt-4 w-full rounded-xl bg-white py-1.5 font-bold text-black"
             onClick={() =>
-              Navigate('/Home/payment', {
+              Navigate('/EcommericWebSite/payment', {
                 state: {
                   cartInfo: CartData,
                 },

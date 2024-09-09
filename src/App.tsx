@@ -43,7 +43,7 @@ const router = createBrowserRouter([
     element: <ResetPassord />,
   },
   {
-    path: '/Home',
+    path: 'EcommericWebSite/',
     element: <Layout />,
     children: [
       {
